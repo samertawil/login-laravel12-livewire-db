@@ -3,9 +3,10 @@
 namespace App\Livewire\Auth;
 
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Livewire\Component;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+use App\Factories\AuthenticationFactory;
 
 class Login extends Component
 {
@@ -18,16 +19,25 @@ class Login extends Component
     /** @var bool */
     public $remember = false;
 
+    protected AuthenticationFactory $authFactory;
+
     protected $rules = [
-        'user_name' => ['required','min:9','max:9'],
+        'user_name' => ['required', 'min:9', 'max:9'],
         'password' => ['required'],
     ];
+
+    public function __construct()
+    {
+
+        $this->authFactory = app(AuthenticationFactory::class);
+    }
 
     public function authenticate(): mixed
     {
         $this->validate();
 
-        if (!Auth::attempt(['user_name' => $this->user_name, 'password' => $this->password], $this->remember)) {
+
+        if (! $this->authFactory->attemptLogin($this->user_name, $this->password, $this->remember)) {
             return  $this->addError('user_name', trans('auth.failed'));
         }
 

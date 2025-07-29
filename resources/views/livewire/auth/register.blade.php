@@ -10,14 +10,14 @@
         </a>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
-          {{__('customTrans.login_system')}}
+            {{ __('customTrans.login_system') }}
         </h2>
 
         <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
-            {{__('customTrans.or')}}
+            {{ __('customTrans.or') }}
             <a href="{{ route('login') }}"
                 class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                {{__('customTrans.sign in to your account')}}
+                {{ __('customTrans.sign in to your account') }}
 
             </a>
         </p>
@@ -26,7 +26,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-           
+
             <div>
                 <label for="user_name" class="col-form-label required ">
                     {{ __('customTrans.idc') }}
@@ -134,142 +134,71 @@
 
 
             @if ($this->questions && $this->trueAnswer == 0)
-                <div class="row my-4">
-
-                    @foreach ($this->questions as $data)
-                        @if ($data->q1)
-                            <span for="q1" class="col-md-4">السؤال
-                                الاول:</span>
-
-                            <div>
-                                <p id="q1_p" type="text" class="form-control border-0  mb-0 ">
-                                    {{ $data->q1 }}؟
-                                </p>
-                            </div>
-
-                            <div>
-                                <label for="answer_q1" class="col-form-label required ">
-                                    {{ __('customTrans.answer_q1') }}
-                                </label>
-
-                                <div class=" rounded-md shadow-sm">
-                                    <input wire:model="answer_q1" id="answer_q1" type="text" required autofocus
-                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('user_name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                                </div>
-                                <small class="text-muted" style="font-size: 12px;">مثال : 2012</small>
-                                @error('answer_q1')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        @endif
-
-                        @if ($data->q2)
-                            <span for="q1" class="col-md-4 mt-4 ">السؤال
-                                الثاني:</span>
-
-                            <div>
-                                <p id="q1_p" type="text" class="form-control border-0  mb-0 ">
-                                    {{ $data->q2 }}؟
-                                </p>
-                            </div>
-
-                            <div>
-                                <label for="answer_q2" class="col-form-label required ">
-                                    {{ __('customTrans.answer_q2') }}
-                                </label>
-
-                                <div class=" rounded-md shadow-sm">
-                                    <input wire:model="answer_q2" id="answer_q2" type="text" required autofocus
-                                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('user_name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                                </div>
-                                <small class="text-muted" style="font-size: 12px;">مثال : 1990</small>
-                                @error('answer_q2')
-                                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                        @endif
-
-                        <div class=" @error('wrongQuestion') is-invalid  @enderror border-0"></div>
-                        @error('wrongQuestion')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                </div>
-            @endforeach
-
-
-            <div class="mt-4">
-                <span class="block w-full rounded-md shadow-sm">
-                    <button type="submit" wire:click='checkAnswers'
-                        class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                        {{ __('customTrans.continue') }}
-                    </button>
-                </span>
-            </div>
-
-        </div>
-        @endif
-        <div>
-
-            @if ($this->trueAnswer == 1)
-
-            <div class="mt-6">
-                <label for="mobile" class="block text-sm font-medium text-gray-700 leading-5 required">
-                    {{__('customTrans.mobile')}}
-                </label>
-
-                <div class="mt-1 rounded-md shadow-sm">
-                    <input wire:model.lazy="mobile" id="mobile"  
-                        class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('mobile') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                </div>
-
-                @error('mobile')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-                <div class="mt-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 leading-5 required">
-                        {{__('customTrans.password')}}
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model="password" id="password" type="password" 
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                    </div>
-
-                    @error('password')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-
-                <div class="mt-6">
-                    <label for="password_confirmation" class="block text-sm font-medium text-gray-700 leading-5 required">
-                        {{__('customTrans.password-confirm')}}
-                        
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model="passwordConfirmation" id="passwordConfirmation" type="password"
-                            
-                            class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 appearance-none rounded-md focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
-                    </div>
-                </div>
-
-
-                <div class="mt-4">
-                    <span class="block w-full rounded-md shadow-sm">
-                        <button type="submit" wire:click.prevent='register' wire:loading.remove
-                            class="btn btn-success flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            Register
-                        </button>
-                    </span>
-                </div>
+                @include('livewire.auth.questions-form')
             @endif
 
+            <div>
+
+                @if ($this->trueAnswer == 1)
+                    <div class="mt-6">
+                        <label for="mobile" class="block text-sm font-medium text-gray-700 leading-5 required">
+                            {{ __('customTrans.mobile') }}
+                        </label>
+
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <input wire:model.lazy="mobile" id="mobile"
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('mobile') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
+                        </div>
+
+                        @error('mobile')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mt-6">
+                        <label for="password" class="block text-sm font-medium text-gray-700 leading-5 required">
+                            {{ __('customTrans.password') }}
+                        </label>
+
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <input wire:model="password" id="password" type="password"
+                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
+                        </div>
+
+                        @error('password')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+
+                    <div class="mt-6">
+                        <label for="password_confirmation"
+                            class="block text-sm font-medium text-gray-700 leading-5 required">
+                            {{ __('customTrans.password-confirm') }}
+
+                        </label>
+
+                        <div class="mt-1 rounded-md shadow-sm">
+                            <input wire:model="passwordConfirmation" id="passwordConfirmation" type="password"
+                                class="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 appearance-none rounded-md focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                        </div>
+                    </div>
+
+
+                    <div class="mt-4">
+                        <span class="block w-full rounded-md shadow-sm">
+                            <button type="submit" wire:click.prevent='register' wire:loading.remove
+                                class="btn btn-success flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                                Register
+                            </button>
+                        </span>
+                    </div>
+                @endif
+
+            </div>
+
+
+            {{-- </form> --}}
         </div>
-
-
-        {{-- </form> --}}
     </div>
-</div>
 </div>

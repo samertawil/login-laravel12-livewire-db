@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Citizen;
 use Livewire\Component;
 use Illuminate\View\View;
+use App\Factories\CheckAnswers;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +25,14 @@ class Reset extends Component
     public string $answer_q1 = '';
     public string $answer_q2 = '';
     public int $trueAnswer = 0;
+    public $errorMessage;
+
+    protected CheckAnswers $checkAnswerFactory;
+
+    public function __construct()
+    {
+        $this->checkAnswerFactory = app(CheckAnswers::class);
+    }
 
     public function rules(): mixed
     {
@@ -79,17 +88,18 @@ class Reset extends Component
         $this->validate($rule, $message_rules);
     }
 
-    public function checkAnswers(): mixed
+    public function checkAnswers(): void
     {
 
-        $data = $this->citizen()->select('answer_q1', 'answer_q2')->first();
+       
+        if (! empty($this->answer_q1) && ! empty($this->answer_q2)) {
 
-
-        if (! ($this->answer_q1 == $data['answer_q1'] && $this->answer_q2 == $data['answer_q2'])) {
-            return    $this->addError('wrongQuestion', ' خطأ بإجابة الاسئلة ');
+            $result = $this->checkAnswerFactory->check($this->citizen, $this->answer_q1, $this->answer_q2);
         }
 
-        return $this->trueAnswer = 1;
+        $this->trueAnswer = $result['success'];
+
+        $this->errorMessage = $result['error'];
     }
 
 

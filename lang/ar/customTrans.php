@@ -385,6 +385,7 @@ return [
      'sign in to your account'=>'الدخول الي حسابك',
      'create a new account'=>'تسجيل حساب جديد',
      'reset password'=>'تحديث كلمة المرور',
+     'Answers do not match'=>'خطأ باجابة اسئلة التحقق',
 
      
 

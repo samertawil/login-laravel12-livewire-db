@@ -5,11 +5,12 @@ namespace App\Livewire\Auth;
 use App\Models\User;
 use App\Models\Citizen;
 use Livewire\Component;
+use Illuminate\View\View;
+use App\Factories\CheckAnswers;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\View\View;
 
 class Register extends Component
 {
@@ -25,6 +26,18 @@ class Register extends Component
     public string $answer_q1 = '';
     public string $answer_q2 = '';
     public int $trueAnswer = 0;
+    public $errorMessage;
+
+    protected CheckAnswers $checkAnswerFactory;
+
+
+    public function __construct()
+    {
+
+        $this->checkAnswerFactory = app(CheckAnswers::class);
+    }
+
+
 
     public function rules(): mixed
     {
@@ -48,7 +61,7 @@ class Register extends Component
         return $rules;
     }
 
-    
+
 
     public function checkDate(): void
     {
@@ -90,17 +103,18 @@ class Register extends Component
     }
 
 
-    public function checkAnswers(): mixed
+    public function checkAnswers(): void
     {
 
-        $data = $this->citizen()->select('answer_q1', 'answer_q2')->first();
 
+        if (! empty($this->answer_q1) && ! empty($this->answer_q2)) {
 
-        if (! ($this->answer_q1 == $data['answer_q1'] && $this->answer_q2 == $data['answer_q2'])) {
-            return    $this->addError('wrongQuestion', ' خطأ بإجابة الاسئلة ');
+            $result = $this->checkAnswerFactory->check($this->citizen, $this->answer_q1, $this->answer_q2);
         }
 
-        return $this->trueAnswer = 1;
+        $this->trueAnswer = $result['success'];
+
+        $this->errorMessage = $result['error'];
     }
 
 
@@ -126,7 +140,7 @@ class Register extends Component
     public function register(): mixed
     {
 
-        if($this->trueAnswer==0) {
+        if ($this->trueAnswer == 0) {
             return '';
         }
 
@@ -157,5 +171,3 @@ class Register extends Component
         return view('livewire.auth.register')->extends('layouts.auth');
     }
 }
-
- 
