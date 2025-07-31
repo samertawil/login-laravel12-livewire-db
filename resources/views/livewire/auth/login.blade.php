@@ -1,11 +1,8 @@
 @section('title', 'Sign in to your account')
-@push('css')
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.rtl.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-@endpush
-<div>
+ 
+<div  >
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <a href="{{ route('home') }}">
+        <a href="{{ route('home') }}" >
             <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
         </a>
 
@@ -15,7 +12,7 @@
         @if (Route::has('register'))
             <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
                 {{ __('customTrans.or') }}
-                <a href="{{ route('register') }}"
+                <a href="{{ route('register') }}" style="text-decoration: none"
                     class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                     {{ __('customTrans.create a new account') }}
 
@@ -68,14 +65,22 @@
                     </div>
 
                     <div class="text-sm leading-5">
-                        <a href="{{ route('password.forget') }}"
-                            class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                        <a href="{{ route('password.forget') }}" style="text-decoration: none"
+                            class="font-medium text-indigo-600  focus:outline-none   transition ease-in-out duration-150">
                             {{__('customTrans.Forgot Your Password')}}
                             
                         </a>
                     </div>
+                  
                 </div>
 
+                <div class="text-sm leading-5 mt-3 mx-2">
+                    <a href="{{ route('support.create') }}" style="text-decoration: none"
+                        class=" font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                        {{__('customTrans.get-help')}}
+                        
+                    </a>
+                </div>
                 <div class="mt-6">
                     <span class="block w-full rounded-md shadow-sm">
                         <button type="submit"

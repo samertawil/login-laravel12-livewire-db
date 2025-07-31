@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Citizen;
 use Livewire\Component;
 use Illuminate\View\View;
-use App\Factories\CheckAnswers;
+use App\Factories\CheckFactory;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,13 +28,13 @@ class Register extends Component
     public int $trueAnswer = 0;
     public $errorMessage;
 
-    protected CheckAnswers $checkAnswerFactory;
+    protected CheckFactory $checkFactory;
 
 
     public function __construct()
     {
 
-        $this->checkAnswerFactory = app(CheckAnswers::class);
+        $this->checkFactory = app(CheckFactory::class);
     }
 
 
@@ -70,15 +70,12 @@ class Register extends Component
 
         if ($this->user_name) {
 
-            $data = $this->citizen()->value('CI_BIRTH_DT');
-
-            if ($data == $birthdayByUser) {
-                $this->showQuestions = 1;
-            } else {
-                $this->addError('wrongDate', __('customTrans.wrong_birthdate'));
-                $this->showQuestions = 0;
-            }
+            $result =   $this->checkFactory->checkBirthdayDateFn($this->citizen(), $birthdayByUser);
         }
+
+        $this->showQuestions = $result['success'];
+
+        $this->errorMessage = $result['error'];
     }
 
     public function updatedUserName(): void
@@ -109,7 +106,7 @@ class Register extends Component
 
         if (! empty($this->answer_q1) && ! empty($this->answer_q2)) {
 
-            $result = $this->checkAnswerFactory->check($this->citizen, $this->answer_q1, $this->answer_q2);
+            $result = $this->checkFactory->checkAnswersFn($this->citizen(), $this->answer_q1, $this->answer_q2);
         }
 
         $this->trueAnswer = $result['success'];
@@ -168,6 +165,6 @@ class Register extends Component
 
     public function render(): View
     {
-        return view('livewire.auth.register')->extends('layouts.auth');
+        return view('livewire.auth.register')->extends('components.layouts.auth');
     }
 }

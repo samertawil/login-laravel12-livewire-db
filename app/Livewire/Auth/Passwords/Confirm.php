@@ -23,6 +23,6 @@ class Confirm extends Component
 
     public function render(): View
     {
-        return view('livewire.auth.passwords.confirm')->extends('layouts.auth');
+        return view('livewire.auth.passwords.confirm')->extends('components.layouts.auth');
     }
 }

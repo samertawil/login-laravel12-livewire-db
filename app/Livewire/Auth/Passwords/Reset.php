@@ -7,6 +7,8 @@ use App\Models\Citizen;
 use Livewire\Component;
 use Illuminate\View\View;
 use App\Factories\CheckAnswers;
+use App\Factories\CheckFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -24,14 +26,14 @@ class Reset extends Component
     public mixed $showQuestions = 0;
     public string $answer_q1 = '';
     public string $answer_q2 = '';
-    public int $trueAnswer = 0;
+    protected int $trueAnswer = 0;
     public $errorMessage;
 
-    protected CheckAnswers $checkAnswerFactory;
+    protected CheckFactory $checkFactory;
 
     public function __construct()
     {
-        $this->checkAnswerFactory = app(CheckAnswers::class);
+        $this->checkFactory = app(CheckFactory::class);
     }
 
     public function rules(): mixed
@@ -63,15 +65,13 @@ class Reset extends Component
 
         if ($this->user_name) {
 
-            $data = $this->citizen()->value('CI_BIRTH_DT');
-
-            if ($data == $birthdayByUser) {
-                $this->showQuestions = 1;
-            } else {
-                $this->addError('wrongDate', __('customTrans.wrong_birthdate'));
-                $this->showQuestions = 0;
-            }
+            $result =   $this->checkFactory->checkBirthdayDateFn($this->citizen(), $birthdayByUser);
+          
         }
+        
+        $this->showQuestions = $result['success'];
+        
+        $this->errorMessage = $result['error'];
     }
 
     public function updatedUserName(): void
@@ -91,10 +91,10 @@ class Reset extends Component
     public function checkAnswers(): void
     {
 
-       
+
         if (! empty($this->answer_q1) && ! empty($this->answer_q2)) {
 
-            $result = $this->checkAnswerFactory->check($this->citizen, $this->answer_q1, $this->answer_q2);
+            $result = $this->checkFactory->checkAnswersFn($this->citizen(), $this->answer_q1, $this->answer_q2);
         }
 
         $this->trueAnswer = $result['success'];
@@ -130,12 +130,12 @@ class Reset extends Component
 
         $this->validate();
 
-        $user=User::where('user_name',$this->user_name)->update([
+        $user = User::where('user_name', $this->user_name)->update([
             'password' => Hash::make($this->password),
         ]);
-        
-        $user=User::where('user_name',$this->user_name)->first();
-        
+
+        $user = User::where('user_name', $this->user_name)->first();
+
         Auth::login($user, true);
 
         return redirect()->intended(route('home'));
@@ -149,6 +149,6 @@ class Reset extends Component
 
     public function render(): View
     {
-        return view('livewire.auth.passwords.reset')->extends('layouts.auth');
+        return view('livewire.auth.passwords.reset')->extends('components.layouts.auth');
     }
 }

@@ -1,59 +1,42 @@
 <?php
 
-use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Http\Controllers\Auth\LogoutController;
-use App\Livewire\Auth\Login;
-use App\Livewire\Auth\Passwords\Confirm;
-use App\Livewire\Auth\Passwords\Email;
-use App\Livewire\Auth\Passwords\Reset;
-use App\Livewire\Auth\Register;
-use App\Livewire\Auth\Verify;
+use Livewire\Livewire;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\TechnicalSupport\TechSupportCreate;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::view('/', 'welcome')->name('home');
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
 
-Route::middleware('guest')->group(function () {
-    Route::get('login', Login::class)
-        ->name('login');
+    function () {
+        Livewire::setUpdateRoute(function ($handle) {
+            return Route::post('/livewire/update', $handle);
+        });
 
-    Route::get('register', Register::class)
-        ->name('register');
-});
+        // Route::post('/logout', function () {
+        //     return 'code is here';
+        // })->name('logout');
 
-Route::get('password/reset', Email::class)
-    ->name('password.request');
+        // Route::post('/home', function () {
+        //     return 'code is here';
+        // })->name('home');
 
-Route::get('password/reset/{token}', Reset::class)
-    ->name('password.reset');
+        
+        Route::prefix('support/')->middleware(['web'])->name('support.')->group(function () {
+            Route::get('create', TechSupportCreate::class)->name('create');
+        });
+        
+        
 
-    Route::get('password/forget', Reset::class)
-    ->name('password.forget');
+        include __DIR__ . '/login.php';
+    }
 
-Route::middleware('auth')->group(function () {
-    Route::get('email/verify', Verify::class)
-        ->middleware('throttle:6,1')
-        ->name('verification.notice');
+    
+);
 
-    Route::get('password/confirm', Confirm::class)
-        ->name('password.confirm');
-});
 
-Route::middleware('auth')->group(function () {
-    Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)
-        ->middleware('signed')
-        ->name('verification.verify');
-
-    Route::post('logout', LogoutController::class)
-        ->name('logout');
-});
+ 
