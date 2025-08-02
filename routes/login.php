@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('login1','login');
 
-Route::view('/', 'welcome')->name('home');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)

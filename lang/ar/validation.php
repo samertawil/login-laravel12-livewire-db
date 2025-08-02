@@ -12,7 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    'captcha'=>'خطأ في كود التحقق , يرجي المحاولة مرة اخرى',
+        'captcha' => 'خطأ في كود التحقق , يرجي المحاولة مرة اخرى',
         'required' => 'حقل :attribute مطلوب',
         'unique' => 'الحقل :attribute مكرر لنفس القيمة المدخلة.',
         'numeric' => 'الحقل :attribute يجب ان يكون ارقام.',
@@ -185,7 +185,7 @@ return [
 
         'attributes' => [
                 // 'idc' => 'رقم الهوية',
-            
+
                 // 'birthday' => 'تاريخ الميلاد ',
                 // 'address_specific' => 'استكمال العنوان',
                 // 'address_type' => 'طبيعة العنوان',
@@ -212,7 +212,7 @@ return [
                 // 'damage_size' => 'حجم الضرر',
                 // 'unit_type' => 'المقيم في الوحدة السكنية',
                 // 'citizen_type' => 'حالة المواطنة',
-            
+
                 // 'transport_category' => 'تصنيف الضرر',
                 // 'regestration_idc' => ' هوية المالك',
                 // 'transport_type' => 'نوع الضرر',
@@ -289,7 +289,7 @@ return [
                 // 'day' => 'اليوم',
                 // 'ability_name' => 'اسم الصلاحية',
                 // 'ability_description' => 'وصف الصلاحية',
-////////////////////////////////////////
+                ////////////////////////////////////////
 
                 'name' => 'الاسم',
                 'user_name' => 'اسم المستخدم',
@@ -297,19 +297,23 @@ return [
                 'password' => 'كلمة المرور',
                 'mobile' => 'الهاتف الخليوي',
                 'email' => 'البريد الالكتروني',
-                'recoveryQuestions.0'=>'السؤال الاول',
-                'recoveryQuestions.1'=>'السؤال الثاني',
-                'recoveryQuestions.2'=>'السؤال الثالث',
-                'recoveryQuestions.3'=>'السؤال الرابع',
-                'recoveryQuestions.4'=>'السؤال الخامس',
-                'answer'=>'الاجابة',
-                'answers.0'=>'اجابة السؤال الاول',
-                'answers.1'=>'اجابة السؤال الثاني',
-                'answers.2'=>'اجابة السؤال الثالث',
+                'recoveryQuestions.0' => 'السؤال الاول',
+                'recoveryQuestions.1' => 'السؤال الثاني',
+                'recoveryQuestions.2' => 'السؤال الثالث',
+                'recoveryQuestions.3' => 'السؤال الرابع',
+                'recoveryQuestions.4' => 'السؤال الخامس',
+                'answer' => 'الاجابة',
+                'answers.0' => 'اجابة السؤال الاول',
+                'answers.1' => 'اجابة السؤال الثاني',
+                'answers.2' => 'اجابة السؤال الثالث',
                 'captcha' => 'كود التحقق',
-                'providerName'=>'اسم مقدم الطلب',
-                'subject_id'=>'نوع الدعم ',
-                'issue_description'=>'تفصيل الطلب'
+                'providerName' => 'اسم مقدم الطلب',
+                'subject_id' => 'نوع الدعم ',
+                'issue_description' => 'تفصيل الطلب',
+                'region_id' => 'المحافظة',
+                'full_name' => 'الاسم رباعي',
+                'gender' => 'الجنس',
+
         ],
 
 ];

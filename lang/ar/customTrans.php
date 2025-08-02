@@ -386,6 +386,9 @@ return [
      'create a new account'=>'تسجيل حساب جديد',
      'reset password'=>'تحديث كلمة المرور',
      'Answers do not match'=>'خطأ باجابة اسئلة التحقق',
+     'region_id' => 'المحافظة',
+     'full_name'=>'الاسم رباعي',
+     'gender'=>'الجنس',
 
      
 

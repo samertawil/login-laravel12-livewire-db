@@ -10,8 +10,8 @@ class TechnicalSupport extends Model
     'name' ,
     'user_name',
     'mobile',
-    'subject',
-    'subject_id',
+     'subject_id',
     'issue_description',
+    'region_id',
    ];
 }

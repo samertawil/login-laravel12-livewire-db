@@ -5,7 +5,7 @@
     'iclass' => '',
     '$iclassName' => '',
     'text_dir'=>'text-right',
-    'default_class'=>'btn btn-sm btn-light-primary '
+    'default_class'=>'btn btn-sm btn-light-primary'
 ])
 
 

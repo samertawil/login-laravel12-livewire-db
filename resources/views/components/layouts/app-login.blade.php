@@ -1,9 +1,6 @@
 @extends('components.layouts.base')
 
 @section('body')
-
-@include('partials.metronic7.top-navbar')
-
     @yield('content')
     
     @isset($slot)
