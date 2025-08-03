@@ -389,6 +389,10 @@ return [
      'region_id' => 'المحافظة',
      'full_name'=>'الاسم رباعي',
      'gender'=>'الجنس',
+     'marital_status'=>'الحالة الاجتماعية',
+     'familyCount'=>'عدد افراد الأسرة',
+     'city_id'=>'المدينة',
+     'neighbourhood_id'=>'الحي',
 
      
 
