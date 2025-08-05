@@ -13,7 +13,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
 
-
+    {{-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.rtl.min.css') }}">--}}
     {{-- <link rel="stylesheet" href="{{ asset('css/main.css') }}">  --}}
     @include('partials.metronic7.head')

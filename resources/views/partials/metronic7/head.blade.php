@@ -4,7 +4,7 @@
 <link rel="shortcut icon" href="{{asset('template-assets/metronic7/media/logos/favicon.ico')}}" />
 
 <link href="{{ asset('template-assets/main.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{asset('template-assets/valex/css/icons.css')}}" rel="stylesheet">
+{{-- <link href="{{asset('template-assets/valex/css/icons.css')}}" rel="stylesheet"> --}}
 
 
 

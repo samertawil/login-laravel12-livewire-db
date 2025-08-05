@@ -316,6 +316,22 @@ return [
                 'marital_status'=>'الحالة الاجتماعية',
                 'city_id'=>'المدينة',
                 'neighbourhood_id'=>'الحي',
+                'e_city_id'=>'المدينة',
+                'e_neighbourhood_id'=>'الحي',
+                'e_region_id' => 'المحافظة',
+                'e_home_type' => 'نوع الاقامة حاليا',
+                'e_full_address' => 'عنوان الاقامة الحالي بالتفصيل',
+                'mental_disability' => 'اعاقة ذهنية',
+     'physical_impairment' => 'اعاقة حركية',
+     'hearing_impairment' => 'اعاقة سمعية',
+     'visual_impairment' => 'اعاقة بصرية',
+     'diabetes' => 'السكري',
+     'blood_pressure' => 'ضغط الدم',
+     'cancer' => 'سرطان',
+     'Kidney_failure' => 'فشل كلوي',
+     'wife_breastfeeding'=>'الزوجة مرضعة',
+     'wife_pregnant'=>'الزوجة حامل',
+                
 
         ],
 

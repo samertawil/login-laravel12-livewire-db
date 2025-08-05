@@ -386,14 +386,27 @@ return [
      'create a new account'=>'تسجيل حساب جديد',
      'reset password'=>'تحديث كلمة المرور',
      'Answers do not match'=>'خطأ باجابة اسئلة التحقق',
-     'region_id' => 'المحافظة',
+   
      'full_name'=>'الاسم رباعي',
      'gender'=>'الجنس',
      'marital_status'=>'الحالة الاجتماعية',
      'familyCount'=>'عدد افراد الأسرة',
      'city_id'=>'المدينة',
      'neighbourhood_id'=>'الحي',
-
+     'region_id' => 'المحافظة',
+     'e_city_id'=>'المدينة',
+     'e_neighbourhood_id'=>'الحي',
+     'e_region_id' => 'المحافظة',
+     'e_home_type' => 'نوع الاقامة حاليا',
+     'e_full_address' => 'عنوان الاقامة الحالي بالتفصيل',
+     'mental_disability' => 'اعاقة ذهنية',
+     'physical_impairment' => 'اعاقة حركية',
+     'hearing_impairment' => 'اعاقة سمعية',
+     'visual_impairment' => 'اعاقة بصرية',
+     'diabetes' => 'السكري',
+     'blood_pressure' => 'ضغط الدم',
+     'cancer' => 'سرطان',
+     'Kidney_failure' => 'فشل كلوي',
      
 
 ];

@@ -1,27 +1,27 @@
 <div>
     <header>
-        <div b-g6ltozs93r="" class="container m-auto" style="border-bottom: 1px solid #c3c3c3;">
+        <div class="container m-auto" style="border-bottom: 1px solid #c3c3c3;">
 
-            <div b-g6ltozs93r="" class="col-md-12 mt-3 mb-4 m-auto">
+            <div class="col-md-12 mt-3 mb-4 m-auto">
 
-                <div b-g6ltozs93r="" class="row">
-                    <div b-g6ltozs93r="" class="col-auto">
+                <div class="row">
+                    <div class="col-auto">
                         <a href="/login">
                             <img src="https://mosa.e-gaza.com/images/p.png" width="55" class="m-2">
                         </a>
                     </div>
-                    <div b-g6ltozs93r="" class="col-auto mt-2 d-sm-block d-none">
-                        <span b-g6ltozs93r="" class="d-block ms-2 fs-2 mb-2">
+                    <div class="col-auto mt-2 d-sm-block d-none">
+                        <span class="d-block ms-2 fs-2 mb-2">
                             دولة فلسـطـين
                         </span>
-                        <span b-g6ltozs93r="" class="d-block ms-2 fs-5">
+                        <span class="d-block ms-2 fs-5">
                             وزارة التنمية الاجتماعية
                         </span>
                     </div>
-                    <div b-g6ltozs93r="" class="col-auto ms-4" style="border-right:1px solid #c3c3c3">
+                    <div class="col-auto ms-4" style="border-right:1px solid #c3c3c3">
 
-                        <div b-g6ltozs93r="" class="mt-3 ms-2">
-                            <h1 b-g6ltozs93r=""> منظومة تحديث بيانات مواطني قطاع غزة</h1>
+                        <div class="mt-3 ms-2">
+                            <h1> منظومة تحديث بيانات مواطني قطاع غزة</h1>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,8 @@
                 <div class="form-group ">
                     <div class="alert alert-custom alert-default py-1" role="alert">
                         <div class="alert-icon"><i class=" py-1 mr-4 "><span
-                                    class=" svg-icon svg-icon-primary svg-icon-3x"><!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Files/User-folder.svg--><svg
+                                    class=" svg-icon svg-icon-primary svg-icon-3x">
+                                    <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/metronic/releases/2021-05-14-112058/theme/html/demo5/dist/../src/media/svg/icons/Files/User-folder.svg--><svg
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                         <title>البيانات الشخصية </title>
@@ -71,138 +72,54 @@
                                                 d="M7.00036205,18.4995035 C7.21569918,15.5165724 9.36772908,14 11.9907452,14 C14.6506758,14 16.8360465,15.4332455 16.9988413,18.5 C17.0053266,18.6221713 16.9988413,19 16.5815,19 C14.5228466,19 11.463736,19 7.4041679,19 C7.26484009,19 6.98863236,18.6619875 7.00036205,18.4995035 Z"
                                                 fill="#000000" opacity="0.3" />
                                         </g>
-                                    </svg><!--end::Svg Icon--></span></i>البيانات الشخصية</div>
+                                    </svg>
+                                    <!--end::Svg Icon-->
+                                </span></i>البيانات الشخصية</div>
                     </div>
                 </div>
                 <div class="row">
                     <x-input name="idc" label value="{{ $this->personalData->idc ?? '' }}" disabled></x-input>
+
                     <x-input name="full_name" label value="{{ Auth::user()->full_name }}" disabled></x-input>
-                    <x-input name="gender" label value="{{ $this->personalData->SEX ?? '' }}" divWidth="2"
-                        disabled></x-input>
+
+                    <x-input name="gender" label value="{{ $this->personalData->SEX ?? '' }}" divWidth="2" disabled>
+                    </x-input>
+
                     <x-input name="marital_status" label value="{{ $this->personalData->SOCIAL_STATUS ?? '' }}"
                         divWidth="2" disabled></x-input>
-                    <x-input name="familyCount" label value="{{ $this->familyCount }}" divWidth="2"
-                        disabled></x-input>
-                    <div class="col-12 mb-3">
-                        <small>في حالة وجود تغير على البيانات يرجى ارسال شكوى مع ارفاق المستندات</small>
-                    </div>
+
+                    <x-input name="familyCount" label value="{{ $this->familyCount }}" divWidth="2" disabled></x-input>
+
+                    <x-input wire:model='mobile_primary' name="mobile_primary" label divWidth="2" req description_field="مثال : 0591234567"></x-input>
+
+                        <x-input wire:model='mobile_secondary' name="mobile_secondary" label divWidth="2"></x-input>
+
+                            <div class="col-12 my-3">
+                                <small>في حالة وجود تغير على البيانات الشخصية اعلاه  يرجى ارسال شكوى مع ارفاق المستندات</small>
+                            </div>
                 </div>
             </div>
+
 
             <div class="separator separator-dashed my-4"></div>
 
-            <div class="card-body ">
-                <div class="form-group ">
-                    <div class="alert alert-custom alert-default py-1" role="alert">
-                        <div class="alert-icon"><i class="icon-2x text-success flaticon-home-2 mr-5"></i>بيانات السكن الاصلية</div>
-                    </div>
-                </div>
-
-                <div class="row">
-
-
-                    <x-select wire:model.live='region_id' name="region_id" :options="$regions->where('id', '!=', 0)->pluck('region_name', 'id')" label></x-select>
-
-
-                    <x-select wire:model.live='city_id' name="city_id" :options="$cities
-                        ->where('id', '!=', 0)
-                        ->where('region_id', $this->region_id)
-                        ->pluck('city_name', 'id')" label></x-select>
- 
-                    <x-select wire:model.live='neighbourhood_id' name="neighbourhood_id" :options="$neighbourhoods
-                        ->where('id', '!=', 0)
-                        ->where('city_id', $this->city_id)
-                        ->pluck('neighbourhood_name', 'id')" label></x-select>
-
-
-
-
-                </div>
-
-
-
-            </div>
-
+          @include('livewire.citizen-address.create')
 
             <div class="separator separator-dashed my-8"></div>
 
-            <div class="card-body ">
-                <div class="form-group ">
-                    <div class="alert alert-custom alert-default py-1" role="alert">
-                        <div class="alert-icon"><i class="icon-2x text-success flaticon-home-2 mr-5"></i>بيانات الاقامة الحالية </div>
-                    </div>
-                </div>
-
-                <div class="row">
-
-
-                    <x-select wire:model.live='region_id' name="region_id" :options="$regions->where('id', '!=', 0)->pluck('region_name', 'id')" label></x-select>
-
-
-                    <x-select wire:model.live='city_id' name="city_id" :options="$cities
-                        ->where('id', '!=', 0)
-                        ->where('region_id', $this->region_id)
-                        ->pluck('city_name', 'id')" label></x-select>
- 
-                    <x-select wire:model.live='neighbourhood_id' name="neighbourhood_id" :options="$neighbourhoods
-                        ->where('id', '!=', 0)
-                        ->where('city_id', $this->city_id)
-                        ->pluck('neighbourhood_name', 'id')" label></x-select>
-
-
-
-
-                </div>
-
-
-
-            </div>
+            @include('livewire.citizen-health.create')
 
             <div class="separator separator-dashed my-4"></div>
-            <div class="card-body ">
-                <div class="form-group ">
-                    <div class="alert alert-custom alert-default py-1" role="alert">
-                        <div class="alert-icon"><i class="flaticon-warning text-primary"></i>البيانات الشخصية</div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-3  mb-3">
-                        <label for="PersonId" class="form-label">رقم الهوية</label>
-                        <input type="text" class="form-control" id="PersonId" value="800097818" readonly>
-                    </div>
-                    <div class="col-sm-3 col-12 mb-3">
-                        <label for="PersonName" class="form-label">الاسم رباعي</label>
-                        <input type="text" class="form-control" id="PersonName" value="سامر عصام سليم الطويل"
-                            readonly>
-                    </div>
-                    <div class="col-sm-2 col-12 mb-3">
-                        <label for="PersonName" class="form-label">الجنس</label>
-                        <input type="text" class="form-control" id="PersonName" value="ذكر" readonly>
-                    </div>
-                    <div class="col-sm-3 col-12 mb-3" style="display: none">
-                        <label for="PersonName" class="form-label">تاريخ الميلاد</label>
-                        <input type="text" class="form-control" id="PersonName" value="" readonly>
-                    </div>
-                    <div class="col-sm-2 col-12 mb-3">
-                        <label for="PersonName" class="form-label">الحالة الاجتماعية</label>
-                        <input type="text" class="form-control" id="PersonName" value="متزوج" readonly>
-                    </div>
-                    <div class="col-sm-2 col-12 mb-3">
-                        <label for="PersonName" class="form-label">عدد أفراد الأسرة</label>
-                        <input type="text" class="form-control" id="PersonName" value="5" readonly>
-                    </div>
-
-
-                </div>
-
-
-
-            </div>
+          
 
 
         </div>
 
+
+            <div class="d-flex justify-content-center" style="margin-bottom: 40px;">
+                <button wire:click="saveAll" class="form-control btn  my-5 w-75 btn-success " >Save All</button>
+            </div>
+       
 
 
 

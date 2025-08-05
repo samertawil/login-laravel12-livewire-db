@@ -22,7 +22,7 @@
 ])
 
 
-<div   @class([ "form-group mb-$marginBottom col-md-4 col-lg-$divWidth" , $divlclass  ]) data-url={{ $dataUrl }}>
+<div   @class([ "form-group mb-$marginBottom  col-md-4 col-lg-$divWidth"  , $divlclass  ]) data-url={{ $dataUrl }}>
 
     @if ($label)
     <label for="{{ $id }}" @class(["col-form-label   $labelclass " ])>{{$labelname?$labelname: __("customTrans.$name") }}
@@ -47,8 +47,8 @@
           dir="{{ $dir }}"
           title="{{$title}}"
           
-          {{$attributes->class(['form-control',
-            'is-invalid px-8' => $errors->has($name)]) }}>
+          {{$attributes->class(['form-control mx-0',
+            'is-invalid px-8 ' => $errors->has($name)]) }}>
         <small class="text-muted">{{$description_field}}</small>
 
         @include('layouts._show-error',['field_name'=>$name])
