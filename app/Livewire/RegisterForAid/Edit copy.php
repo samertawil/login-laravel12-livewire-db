@@ -10,7 +10,6 @@ use Livewire\Component;
 use App\Enums\YesNoType;
 use App\Models\Relation;
 use Illuminate\View\View;
-use Livewire\Attributes\Title;
 use Illuminate\Validation\Rule;
 use App\Models\AidCitizenHealth;
 use App\Models\AidCitizenAddress;
@@ -21,7 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Models\AidCitizenRegistration;
 
-class Create extends Component
+class Edit extends Component
 {
     public   $personalData = '';
 
@@ -88,6 +87,20 @@ class Create extends Component
     public int|null $count_Kidney_failure = 0;
  
     public int $UserIdc=0;
+    protected mixed $dataCitizenRegistration=null;
+    protected mixed $dataCitizenAddress=null;
+    protected mixed $dataCitizenHealth=null;
+    
+
+    public  function getVar(): array {
+        
+        $dataCitizenRegistration =AidCitizenRegistration::findOrFail($this->UserIdc);
+        $dataCitizenAddress=AidCitizenAddress::where('idc',$this->UserIdc)->first();
+        $dataCitizenHealth= AidCitizenHealth::where('idc',$this->UserIdc)->first();
+
+        return ['dataCitizenRegistration'=>$dataCitizenRegistration,'dataCitizenAddress'=>$dataCitizenAddress,'dataCitizenHealth'=>$dataCitizenHealth];
+    }
+
 
     							
     public function mount(): void
@@ -95,8 +108,7 @@ class Create extends Component
         $settingData=new Setting();
         $data= $settingData->getData();
         $time=  $data->where('key','personalDataCached')->first()->value ?? 1 ;
-       
-    //   dd($time);
+   
         $this->UserIdc=Auth::user()->user_name;
 
         $this->personalData =  Cache::remember('citizenPersonalData',now()->addHours((int) $time), function () {
@@ -106,7 +118,41 @@ class Create extends Component
         $this->familyCount =   Cache::remember('citizenFamilycount',now()->addHours((int) $time),function() {
             return Relation::where('id_1', $this->UserIdc)->whereIn('type_cd', [287, 286])->count() + 1 ?? null;
         });
+
        
+        
+        $this->mobile_primary= $this->getVar()['dataCitizenRegistration']->mobile_primary;
+        $this->mobile_secondary= $this->getVar()['dataCitizenRegistration']->mobile_secondary;
+        $this->region_id=$this->getVar()['dataCitizenAddress']->region_id;
+        $this->city_id=$this->getVar()['dataCitizenAddress']->city_id;
+        $this->neighbourhood_id=$this->getVar()['dataCitizenAddress']->neighbourhood_id;
+        $this->e_home_type=$this->getVar()['dataCitizenAddress']->e_home_type;
+        $this->e_region_id=$this->getVar()['dataCitizenAddress']->e_region_id;
+        $this->e_city_id=$this->getVar()['dataCitizenAddress']->e_city_id;
+        $this->e_neighbourhood_id=$this->getVar()['dataCitizenAddress']->e_neighbourhood_id;
+        $this->e_full_address=$this->getVar()['dataCitizenAddress']->e_full_address;
+        $this->wife_pregnant=$this->getVar()['dataCitizenHealth']->wife_pregnant;
+        $this->wife_breastfeeding=$this->getVar()['dataCitizenHealth']->wife_breastfeeding;
+        $this->mental_disability=$this->getVar()['dataCitizenHealth']->mental_disability;
+        $this->count_mental_disability=$this->getVar()['dataCitizenHealth']->count_mental_disability;
+        $this->physical_impairment=$this->getVar()['dataCitizenHealth']->physical_impairment;
+        $this->count_physical_impairment=$this->getVar()['dataCitizenHealth']->count_physical_impairment;
+
+        $this->hearing_impairment=$this->getVar()['dataCitizenHealth']->hearing_impairment;
+        $this->count_hearing_impairment=$this->getVar()['dataCitizenHealth']->count_hearing_impairment;
+        $this->visual_impairment=$this->getVar()['dataCitizenHealth']->visual_impairment;
+        $this->count_visual_impairment=$this->getVar()['dataCitizenHealth']->count_visual_impairment;
+        $this->diabetes=$this->getVar()['dataCitizenHealth']->diabetes;
+
+        $this->count_diabetes=$this->getVar()['dataCitizenHealth']->count_diabetes;
+        $this->blood_pressure=$this->getVar()['dataCitizenHealth']->blood_pressure;
+        $this->count_blood_pressure=$this->getVar()['dataCitizenHealth']->count_blood_pressure;
+        $this->cancer=$this->getVar()['dataCitizenHealth']->cancer;
+        $this->count_cancer=$this->getVar()['dataCitizenHealth']->count_cancer;
+        $this->Kidney_failure=$this->getVar()['dataCitizenHealth']->Kidney_failure;
+        $this->count_Kidney_failure=$this->getVar()['dataCitizenHealth']->count_Kidney_failure;
+      
+
     }
 
 
@@ -151,62 +197,65 @@ class Create extends Component
     }
     
 
+
+
     public function saveAll(): void
     {
        
+      
+        $CitizenRegistration = $this->getVar()['dataCitizenRegistration'];
+       
+    
         $this->validate();
     
-
-        (int) $sexConstant = Status::where('status_name', $this->personalData['SEX'])->value('id');
+      
         (int) $maritalStatusConstant = Status::where('status_name', $this->personalData['SOCIAL_STATUS'])->value('id');
 
         DB::beginTransaction();
 
         try {
-            AidCitizenRegistration::create([
-                'idc' => $this->UserIdc,
-                'full_name' => Auth::user()->full_name,
-                'birthday' => $this->personalData['CI_BIRTH_DT'],
+            $CitizenRegistration->update([
+              
                 'marital_status' => $maritalStatusConstant,
-                'gender' => $sexConstant,
                 'family_count' => $this->familyCount,
                 'mobile_primary' => $this->mobile_primary,
                 'mobile_secondary' => $this->mobile_secondary,
             ]);
+            
+            
+            // $this->this->getVar()['dataCitizenAddress']->update([
+            //     'idc' => $this->UserIdc,
+            //     'region_id' => $this->region_id,
+            //     'city_id' => $this->city_id,
+            //     'neighbourhood_id' => $this->neighbourhood_id,
+            //     'e_region_id' => $this->e_region_id,
+            //     'e_city_id' => $this->e_city_id,
+            //     'e_neighbourhood_id' => $this->e_neighbourhood_id,
+            //     'e_home_type' => $this->e_home_type,
+            //     'e_full_address' => $this->e_full_address,
+            // ]);
 
-            AidCitizenAddress::create([
-                'idc' => $this->UserIdc,
-                'region_id' => $this->region_id,
-                'city_id' => $this->city_id,
-                'neighbourhood_id' => $this->neighbourhood_id,
-                'e_region_id' => $this->e_region_id,
-                'e_city_id' => $this->e_city_id,
-                'e_neighbourhood_id' => $this->e_neighbourhood_id,
-                'e_home_type' => $this->e_home_type,
-                'e_full_address' => $this->e_full_address,
-            ]);
-
-            AidCitizenHealth::create([
-                'idc' => $this->UserIdc,
-                'wife_pregnant' => $this->wife_pregnant ,
-                'wife_breastfeeding' => $this->wife_breastfeeding ,
-                'mental_disability' => $this->mental_disability ,
-                'count_mental_disability' => $this->count_mental_disability ,
-                'physical_impairment' => $this->physical_impairment ,
-                'count_physical_impairment' => $this->count_physical_impairment ,
-                'hearing_impairment' => $this->hearing_impairment ,
-                'count_hearing_impairment' => $this->count_hearing_impairment ,
-                'visual_impairment' => $this->visual_impairment ,
-                'count_visual_impairment' => $this->count_visual_impairment ,
-                'diabetes' => $this->diabetes ,
-                'count_diabetes' => $this->count_diabetes ,
-                'blood_pressure' => $this->blood_pressure ,
-                'count_blood_pressure' => $this->count_blood_pressure ,
-                'cancer' => $this->cancer ,
-                'count_cancer' => $this->count_cancer ,
-                'Kidney_failure' => $this->Kidney_failure ,
-                'count_Kidney_failure' => $this->count_Kidney_failure ,
-            ]);
+            // $this->dataCitizenHealth->update([
+            //     'idc' => $this->UserIdc,
+            //     'wife_pregnant' => $this->wife_pregnant ,
+            //     'wife_breastfeeding' => $this->wife_breastfeeding ,
+            //     'mental_disability' => $this->mental_disability ,
+            //     'count_mental_disability' => $this->count_mental_disability ,
+            //     'physical_impairment' => $this->physical_impairment ,
+            //     'count_physical_impairment' => $this->count_physical_impairment ,
+            //     'hearing_impairment' => $this->hearing_impairment ,
+            //     'count_hearing_impairment' => $this->count_hearing_impairment ,
+            //     'visual_impairment' => $this->visual_impairment ,
+            //     'count_visual_impairment' => $this->count_visual_impairment ,
+            //     'diabetes' => $this->diabetes ,
+            //     'count_diabetes' => $this->count_diabetes ,
+            //     'blood_pressure' => $this->blood_pressure ,
+            //     'count_blood_pressure' => $this->count_blood_pressure ,
+            //     'cancer' => $this->cancer ,
+            //     'count_cancer' => $this->count_cancer ,
+            //     'Kidney_failure' => $this->Kidney_failure ,
+            //     'count_Kidney_failure' => $this->count_Kidney_failure ,
+            // ]);
             
             DB::commit();
 
@@ -220,6 +269,7 @@ class Create extends Component
             );
         } catch (\Throwable $th) {
             DB::rollBack();
+            dd($th);
             Log::error('Failed to save aid registration data', [
                 'user_id' => $this->UserIdc,
                 'error' => $th->getMessage(),
@@ -235,10 +285,11 @@ class Create extends Component
         }
     }
 
-   
+
     public function render(): View
     {
-
+        
+       
         $statusModel = new Status();
         $statuses = $statusModel->statuses();
 
@@ -246,6 +297,6 @@ class Create extends Component
         $cities  = CacheModelServices::getCityTableData();
         $neighbourhoods = CacheModelServices::getNeighbourhoodTableData();
 
-        return view('livewire.register-for-aid.create', compact(['regions', 'cities', 'neighbourhoods', 'statuses']))->layoutData(['Title'=>'fff']);
+        return view('livewire.register-for-aid.create', compact(['regions', 'cities', 'neighbourhoods', 'statuses']));
     }
 }

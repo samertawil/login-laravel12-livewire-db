@@ -4,24 +4,17 @@
 
             <div class="col-md-12 mt-3 mb-4 m-auto">
 
-                <div class="row">
+                <div class="row align-items-center">
                     <div class="col-auto">
                         <a href="/login">
                             <img src="https://mosa.e-gaza.com/images/p.png" width="55" class="m-2">
                         </a>
                     </div>
-                    <div class="col-auto mt-2 d-sm-block d-none">
-                        <span class="d-block ms-2 fs-2 mb-2">
-                            دولة فلسـطـين
-                        </span>
-                        <span class="d-block ms-2 fs-5">
-                            وزارة التنمية الاجتماعية
-                        </span>
-                    </div>
-                    <div class="col-auto ms-4" style="border-right:1px solid #c3c3c3">
+
+                    <div class="col-auto ms-4">
 
                         <div class="mt-3 ms-2">
-                            <h1> منظومة تحديث بيانات مواطني قطاع غزة</h1>
+                            <h1> اسثتمارة تحديث بيانات مواطني قطاع غزة</h1>
                         </div>
                     </div>
                 </div>
@@ -88,38 +81,41 @@
                     <x-input name="marital_status" label value="{{ $this->personalData->SOCIAL_STATUS ?? '' }}"
                         divWidth="2" disabled></x-input>
 
-                    <x-input name="familyCount" label value="{{ $this->familyCount }}" divWidth="2" disabled></x-input>
+                    <x-input name="familyCount" label value="{{ $this->familyCount }}" divWidth="2"
+                        disabled></x-input>
 
-                    <x-input wire:model='mobile_primary' name="mobile_primary" label divWidth="2" req description_field="مثال : 0591234567"></x-input>
+                    <x-input wire:model='mobile_primary' name="mobile_primary" label divWidth="2" req
+                        description_field="مثال : 0591234567"></x-input>
 
-                        <x-input wire:model='mobile_secondary' name="mobile_secondary" label divWidth="2"></x-input>
+                    <x-input wire:model='mobile_secondary' name="mobile_secondary" label divWidth="2"></x-input>
 
-                            <div class="col-12 my-3">
-                                <small>في حالة وجود تغير على البيانات الشخصية اعلاه  يرجى ارسال شكوى مع ارفاق المستندات</small>
-                            </div>
+                    <div class="col-12 my-3">
+                        <small>في حالة وجود تغير على البيانات الشخصية اعلاه يرجى ارسال شكوى مع ارفاق المستندات</small>
+                    </div>
                 </div>
             </div>
 
 
             <div class="separator separator-dashed my-4"></div>
 
-          @include('livewire.citizen-address.create')
+            @include('livewire.citizen-address.create')
 
             <div class="separator separator-dashed my-8"></div>
 
             @include('livewire.citizen-health.create')
 
             <div class="separator separator-dashed my-4"></div>
-          
+
 
 
         </div>
 
 
-            <div class="d-flex justify-content-center" style="margin-bottom: 40px;">
-                <button wire:click="saveAll" class="form-control btn  my-5 w-75 btn-success " >Save All</button>
-            </div>
-       
+        <div class="d-flex justify-content-center" style="margin-bottom: 40px;">
+            <button wire:click="saveAll"
+                class="form-control btn  my-5 w-75 btn-success ">{{ __('customTrans.save') }}</button>
+        </div>
+
 
 
 

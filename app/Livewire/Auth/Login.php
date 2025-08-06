@@ -5,8 +5,6 @@ namespace App\Livewire\Auth;
 
 use Livewire\Component;
 use Illuminate\View\View;
-use Livewire\Attributes\Layout;
-use Illuminate\Support\Facades\Auth;
 use App\Factories\AuthenticationFactory;
 
 class Login extends Component
@@ -35,6 +33,7 @@ class Login extends Component
 
     public function authenticate(): mixed
     {
+        
         $this->validate();
 
 
@@ -44,10 +43,10 @@ class Login extends Component
 
         return redirect()->intended(route('home'));
     }
-    #[Layout('components.layouts.app-login')]
+ 
     public function render(): View
     {
-        
-        return view('livewire.auth.login')->extends('components.layouts.auth');
+        $title = __('customTrans.login_system');  
+        return view('livewire.auth.login')->layoutData(['title' => $title])->layout('components.layouts.uilogin-admin-app');
     }
 }

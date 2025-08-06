@@ -165,6 +165,9 @@ class Register extends Component
 
     public function render(): View
     {
-        return view('livewire.auth.register')->extends('components.layouts.auth');
+        $title = __('customTrans.login_system');  
+        return view('livewire.auth.register')->layoutData(['title' => $title])->layout('components.layouts.uilogin-admin-app');
     }
 }
+
+ 

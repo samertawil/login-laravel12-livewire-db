@@ -1,96 +1,146 @@
-@section('title', 'Sign in to your account')
+<div class="d-flex flex-column flex-root">
  
-<div  >
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <a href="{{ route('home') }}" >
-            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
-        </a>
+    <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
+        <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat "
+            style="background-image: url('{{ asset('template-assets/metronic7/media/bg/bg-3.jpg') }}');">
 
-        <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
-            {{ __('customTrans.sign in to your account') }}
-        </h2>
-        @if (Route::has('register'))
-            <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
-                {{ __('customTrans.or') }}
-                <a href="{{ route('register') }}" style="text-decoration: none"
-                    class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                    {{ __('customTrans.create a new account') }}
+            <div class=" login-form text-center p-7 position-relative overflow-hidden">
 
-                </a>
-            </p>
-        @endif
-    </div>
+                <div class="d-flex flex-center mb-10">
+                    <a  >
 
-    <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
-            <form wire:submit.prevent="authenticate">
-                <div>
-                    <label for="user_name" class="block text-sm font-medium text-gray-700 leading-5">
-                     {{__('customTrans.user_name')}}
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="user_name" id="user_name" name="user_name" type="text" required
-                            autofocus
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('user_name') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                    </div>
-
-                    @error('user_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="mt-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 leading-5">
-                        {{__('customTrans.password')}}
-                    </label>
-
-                    <div class="mt-1 rounded-md shadow-sm">
-                        <input wire:model.lazy="password" id="password" type="password" required
-                            class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                    </div>
-
-                    @error('password')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="flex items-center justify-between mt-6">
-                    <div class="flex items-center">
-                        <input wire:model.lazy="remember" id="remember" type="checkbox"
-                            class="form-checkbox w-4 h-4 text-indigo-600 transition duration-150 ease-in-out mx-2" />
-                        <label for="remember" class="block ml-2 text-sm text-gray-900 leading-5">
-                            {{__('customTrans.remember')}}
-                        </label>
-                    </div>
-
-                    <div class="text-sm leading-5">
-                        <a href="{{ route('password.forget') }}" style="text-decoration: none"
-                            class="font-medium text-indigo-600  focus:outline-none   transition ease-in-out duration-150">
-                            {{__('customTrans.Forgot Your Password')}}
-                            
-                        </a>
-                    </div>
-                  
-                </div>
-
-                <div class="text-sm leading-5 mt-3 mx-2">
-                    <a href="{{ route('support.create') }}" style="text-decoration: none"
-                        class=" font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                        {{__('customTrans.get-help')}}
-                        
+                        <img src="{{ asset('Users_icon.png') }}" class="max-h-150px" alt="" />
                     </a>
                 </div>
-                <div class="mt-6">
-                    <span class="block w-full rounded-md shadow-sm">
-                        <button type="submit"
-                            class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
-                            {{__('customTrans.sign in')}}
-                          
-                        </button>
-                    </span>
+
+                <div class="login-signin">
+                    <div class="mb-10">
+                        <h1>{{ __('customTrans.Sign In To Admin') }}</h1>
+                        <div class="text-muted font-weight-bold">
+                            {{ __('customTrans.Enter your details to login to your account') }}</div>
+                    </div>
+                    <form wire:submit="authenticate" class="form">
+                        <div class="form-group mb-5 ">
+                            <input
+                                class="form-control h-auto form-control-solid py-4 m-auto  w-75 w-lg-100 text-center @error('user_name') is-invalid
+                                
+                            @enderror"
+                                type="text" placeholder="{{ __('customTrans.user_name') }}"
+                                wire:model="user_name" id="user_name" name="user_name" dir="ltr"
+                                autofocus />
+                            @include('layouts._show-error', ['field_name' => 'user_name'])
+                        </div>
+                        <div class="form-group mb-5">
+                            <input wire:model="password" name="password" dir="ltr"
+                                class="form-control h-auto form-control-solid py-4 m-auto  w-75 w-lg-100 text-center @error('password') is-invalid
+                                
+                                @enderror"
+                                type="password" placeholder="{{ __('customTrans.password') }}"
+                                name="password" />
+                            @include('layouts._show-error', ['field_name' => 'password'])
+                        </div>
+                        <div class="form-group d-flex flex-wrap justify-content-between align-items-center m-auto w-75 w-lg-100">
+                            <div class="checkbox-inline">
+                                <label class="checkbox m-0 text-muted">
+                                    <input wire:model='remember' name="remember" type="checkbox" />
+                                    <span></span>
+                                    {{ __('customTrans.remember') }}
+                                </label>
+                            </div>
+                            <a href="{{ route('password.forget') }}" wire:navigate
+                                class="text-muted text-hover-primary">{{ __('customTrans.Forgot Your Password') }}</a>
+                        </div>
+                      
+                        <button
+                            class="btn btn-primary font-weight-bold  my-5  w-75">{{ __('customTrans.Login') }}</button>
+
+
+                    </form>
+                    <div class="mt-3">
+                        <span class="opacity-70 mr-4">
+                            {{ __('customTrans.dont have account') }}
+                        </span>
+                        <a href="{{ route('register') }}" wire:navigate id="kt_login_signup"
+                            class="text-muted text-hover-primary font-weight-bold">{{ __('customTrans.register_new_account') }}</a>
+                    </div>
+                    <div class="mt-5">
+                        <a href="{{ route('support.create') }}" wire:navigate
+                        class="text-muted text-hover-primary">{{ __('customTrans.technical support') }}</a>  
+                    </div>
+                 
                 </div>
-            </form>
+                <div class="mt-20 col-12">
+                    @include('partials.metronic7._lang')
+                </div>
+              
+            </div>
+          
         </div>
+      
     </div>
+  
 </div>
+
+
+<script>
+    var KTAppSettings = {
+        "breakpoints": {
+            "sm": 576,
+            "md": 768,
+            "lg": 992,
+            "xl": 1200,
+            "xxl": 1200
+        },
+        "colors": {
+            "theme": {
+                "base": {
+                    "white": "#ffffff",
+                    "primary": "#6993FF",
+                    "secondary": "#E5EAEE",
+                    "success": "#1BC5BD",
+                    "info": "#8950FC",
+                    "warning": "#FFA800",
+                    "danger": "#F64E60",
+                    "light": "#F3F6F9",
+                    "dark": "#212121"
+                },
+                "light": {
+                    "white": "#ffffff",
+                    "primary": "#E1E9FF",
+                    "secondary": "#ECF0F3",
+                    "success": "#C9F7F5",
+                    "info": "#EEE5FF",
+                    "warning": "#FFF4DE",
+                    "danger": "#FFE2E5",
+                    "light": "#F3F6F9",
+                    "dark": "#D6D6E0"
+                },
+                "inverse": {
+                    "white": "#ffffff",
+                    "primary": "#ffffff",
+                    "secondary": "#212121",
+                    "success": "#ffffff",
+                    "info": "#ffffff",
+                    "warning": "#ffffff",
+                    "danger": "#ffffff",
+                    "light": "#464E5F",
+                    "dark": "#ffffff"
+                }
+            },
+            "gray": {
+                "gray-100": "#F3F6F9",
+                "gray-200": "#ECF0F3",
+                "gray-300": "#E5EAEE",
+                "gray-400": "#D6D6E0",
+                "gray-500": "#B5B5C3",
+                "gray-600": "#80808F",
+                "gray-700": "#464E5F",
+                "gray-800": "#1B283F",
+                "gray-900": "#212121"
+            }
+        },
+        "font-family": "Poppins"
+    };
+</script>
+
+

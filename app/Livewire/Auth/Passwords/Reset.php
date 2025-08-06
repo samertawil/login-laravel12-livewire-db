@@ -26,7 +26,7 @@ class Reset extends Component
     public mixed $showQuestions = 0;
     public string $answer_q1 = '';
     public string $answer_q2 = '';
-    protected int $trueAnswer = 0;
+    public int $trueAnswer = 0;
     public $errorMessage;
 
     protected CheckFactory $checkFactory;
@@ -91,7 +91,11 @@ class Reset extends Component
     public function checkAnswers(): void
     {
 
-
+          $this->validate([
+            'answer_q1'=>['required'],
+            'answer_q2'=>['required'],
+          ]);
+        
         if (! empty($this->answer_q1) && ! empty($this->answer_q2)) {
 
             $result = $this->checkFactory->checkAnswersFn($this->citizen(), $this->answer_q1, $this->answer_q2);
@@ -100,6 +104,7 @@ class Reset extends Component
         $this->trueAnswer = $result['success'];
 
         $this->errorMessage = $result['error'];
+        
     }
 
 
@@ -124,10 +129,12 @@ class Reset extends Component
 
     public function resetPassword()
     {
+       
         if ($this->trueAnswer == 0) {
+           
             return '';
         }
-
+       
         $this->validate();
 
         $user = User::where('user_name', $this->user_name)->update([
@@ -149,6 +156,8 @@ class Reset extends Component
 
     public function render(): View
     {
-        return view('livewire.auth.passwords.reset')->extends('components.layouts.auth');
+        $title = __('customTrans.login_system');  
+        return view('livewire.auth.passwords.reset')->layoutData(['title' => $title])->layout('components.layouts.uilogin-admin-app');
     }
 }
+ 

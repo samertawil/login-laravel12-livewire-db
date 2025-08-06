@@ -2,11 +2,15 @@
 
 use App\Livewire\Home;
 use Livewire\Livewire;
+use App\Http\Middleware\CheckToEdit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
-use App\Livewire\RegisterForAid\Create as RegisterForAidCreate;
+use App\Http\Middleware\CheckIfRegister;
+use App\Http\Middleware\CheckToRegister;
 use App\Livewire\TechnicalSupport\TechSupportCreate;
+use App\Livewire\RegisterForAid\Edit as RegisterForAidEdit;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Livewire\RegisterForAid\Create as RegisterForAidCreate;
 
 
 Route::group(
@@ -29,7 +33,8 @@ Route::group(
 
         Route::get('/', Home::class)->middleware('auth:web')->name('home');
 
-        Route::get('aid/create',RegisterForAidCreate::class)->middleware('auth:web')->name('aid.create');
+        Route::get('aid/create',RegisterForAidCreate::class)->middleware('auth:web')->middleware(CheckToRegister::class)->name('aid.create');
+        Route::get('aid/edit',RegisterForAidEdit::class)->middleware('auth:web')->middleware(CheckToEdit::class)->name('aid.edit');
 
         include __DIR__ . '/login.php';
 

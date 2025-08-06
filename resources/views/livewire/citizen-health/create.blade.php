@@ -339,7 +339,7 @@
                                 <span></span>
                                 نعم
                             </label>
-                            <label class="radio radio-outline radio-danger">
+                            <label class="radio radio-outline radio-success">
                                 <input type="radio" wire:model='Kidney_failure' name="Kidney_failure" value="4"
                                     data-gtm-form-interact-field-id="Kidney_failure4">
                                 <span></span>

@@ -407,6 +407,14 @@ return [
      'blood_pressure' => 'ضغط الدم',
      'cancer' => 'سرطان',
      'Kidney_failure' => 'فشل كلوي',
-     
+     'Sign In To Admin'=>'تسجيل دخول الموظفين',
+'Enter your details to login to your account'=>'الرجاء ادخال بيانات الدخول للحساب',
+'dont have account'=>'لا تملك حساب؟',
+'User name is required'=>'مطلوب ادخال اسم المستخدم',
+'Password is required'=>'مطلوب ادخال كلمة المرور ',
+'Enter your user name to reset your password'=>'ادخل اسم المستخدم لإعادة كلمة المرور',
+'technical support'=>'طلب دعم فني',
+'answer_q1'=>'اجابة السؤال الاول',
+'answer_q2'=>'اجابة السؤال الثاني',
 
 ];
