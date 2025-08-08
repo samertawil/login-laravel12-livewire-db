@@ -135,7 +135,7 @@
                 </div>
                 <div class="col-5 mr-8">
                     <x-input wire:show='physical_impairment==3' wire:model='count_physical_impairment'
-                        name="count_physical_impairment" type="number" min="0" max="9" placeholder="العدد"
+                        name="count_physical_impairment" type="number" min="0" max="50" placeholder="العدد"
                         divlclass="col-12" divWidth="5"></x-input>
                 </div>
 

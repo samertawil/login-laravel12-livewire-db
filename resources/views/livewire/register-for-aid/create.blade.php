@@ -116,7 +116,10 @@
                 class="form-control btn  my-5 w-75 btn-success ">{{ __('customTrans.save') }}</button>
         </div>
 
-
+        <div >
+            @include('layouts._show_errors_all')
+        </div>
+       
 
 
 
