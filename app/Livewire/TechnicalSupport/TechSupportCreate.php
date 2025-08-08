@@ -2,6 +2,7 @@
 
 namespace App\Livewire\TechnicalSupport;
 
+use App\Models\Status;
 use Livewire\Component;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -60,13 +61,13 @@ class TechSupportCreate extends Component
     }
 
  
-    #[Layout('components.layouts.app-login')]
+     #[Layout('components.layouts.uilogin-admin-app')]
     public function render(): View
     {
+        $statusModel= new Status();
+        $regions=$statusModel->statuses();
  
-       
-
         (string) $title=__('customTrans.technical support');
-        return view('livewire.technical-support.create')->layoutData(['title'=>$title,'pagetitle'=>$title]);
+        return view('livewire.technical-support.create',compact('regions'))->layoutData(['title'=>$title]);
     }
 }

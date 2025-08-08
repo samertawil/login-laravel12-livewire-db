@@ -130,6 +130,24 @@
     <script src="{{ asset('template-assets/metronic7/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('template-assets/metronic7/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
     <script src="{{ asset('template-assets/metronic7/js/scripts.bundle.js') }}"></script>
+    <script>
+        window.addEventListener('reload', event => {
+          location.reload();
+        })
+    </script>
+    
+    <script>
+        window.addEventListener('alert', (event) => {
+            let data = event.detail;
+    
+            Swal.fire({
+                title: data.title,
+                text: data.text,
+                icon: data.type,
+                confirmButtonText: data.confirmButtonText
+            })
+        });
+    </script>
 
     <script>
         var KTAppSettings = {
