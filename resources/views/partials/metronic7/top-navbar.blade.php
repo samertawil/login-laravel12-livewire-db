@@ -1,6 +1,6 @@
 <header>
-    <nav class="navbar bg-dark  navbar-expand-md navbar-dark justify-content-between align-items-center py-3 ">
-        <div class="container">
+    <nav class="navbar  navbar-expand-md navbar-dark justify-content-between align-items-center py-5 " style="background-color: rgb(205, 223, 248)">
+        <div class="container" >
 
             <button class="navbar-toggler my-3" type="button" data-bs-toggle="collapse" data-bs-target=".navmenu">
                 <span class="navbar-toggler-icon " style="color: yellow !important;"></span>
@@ -90,17 +90,17 @@
 
             <div>
 
-                <p class="h5 text-light bg-danger text-center">المساعدات والإغاثة الإنسانية </p>
+                <p class="h5 text-dark text-center">المساعدات والإغاثة الإنسانية </p>
 
                 <div class="d-flex justify-content-between align-items-center">
                     <button
-                        class="btn btn-small text-muted"><small>{{ Auth::user()->full_name ?? 'Guest' }}</small></button>
+                        class="btn btn-small text-muted"><small class="text-dark">{{ Auth::user()->full_name ?? 'Guest' }}</small></button>
 
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
 
                         <button type="submit" class="btn btn-small text-muted ">
-                            <small>تسجيل
+                            <small class="text-danger">تسجيل
                                 خروج</small> </button>
                     </form>
 

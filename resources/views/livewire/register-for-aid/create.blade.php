@@ -111,7 +111,7 @@
         </div>
 
 
-        <div class="d-flex justify-content-center" style="margin-bottom: 40px;">
+        <div class="d-flex justify-content-center" style="margin-bottom: 30px;">
             <button wire:click="saveAll"
                 class="form-control btn  my-5 w-75 btn-success ">{{ __('customTrans.save') }}</button>
         </div>

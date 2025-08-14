@@ -5,9 +5,9 @@ use Livewire\Livewire;
 use App\Http\Middleware\CheckToEdit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
-use App\Http\Middleware\CheckIfRegister;
 use App\Http\Middleware\CheckToRegister;
-use App\Livewire\TechnicalSupport\TechSupportCreate;
+use App\Livewire\TechnicalSupport\Create as TechSupportCreate;
+use App\Livewire\TechnicalSupport\Show as TechSupportShow;
 use App\Livewire\RegisterForAid\Edit as RegisterForAidEdit;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Livewire\RegisterForAid\Create as RegisterForAidCreate;
@@ -28,6 +28,7 @@ Route::group(
         
         Route::prefix('support/')->middleware(['web'])->name('support.')->group(function () {
             Route::get('create', TechSupportCreate::class)->name('create');
+            Route::get('show', TechSupportShow::class)->name('show');
         });
         
 

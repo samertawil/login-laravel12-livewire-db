@@ -16,7 +16,7 @@
                 <form wire:submit='create'>
 
                     <div class="row col-12 justify-content-center">
- 
+
 
                         <x-input name="user_name" wire:model='user_name' label :labelname="__('customTrans.idc')" divlclass="col-5"
                             divWidth="5" req></x-input>
@@ -27,7 +27,9 @@
                     </div>
 
                     <div class="row col-12 justify-content-start">
-                        <x-select wire:model='region_id' id='region_id' name="region_id" :options="$regions->where('p_id_sub', config('myconstant.regions'))->pluck('status_name','id')" label
+                        <x-select wire:model='region_id' id='region_id' name="region_id" :options="$regions
+                            ->where('p_id_sub', config('myconstant.regions'))
+                            ->pluck('status_name', 'id')" label
                             :labelname="__('customTrans.region_id')" divWidth="5" divlclass="col-5" req></x-select>
 
                     </div>
@@ -72,7 +74,7 @@
 
                             <div class="form-group d-flex flex-wrap flex-center mt-10">
                                 <x-cancel-back class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2"
-                                    :route="route('login')" wire:navigate label="cancel_back"
+                                    :route="route('login')"   label="cancel_back"
                                     wire:loading.remove></x-cancel-back>
 
                             </div>
@@ -85,28 +87,15 @@
 
 
 
-
-
-
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        $('#subject_id').on('change', function() {
 
-</div>
-</div>
+            $data = $("#subject_id option:selected").text();
 
-
-
-<script>
-    $('#subject_id').on('change', function() {
-
-        $data = $("#subject_id option:selected").text();
-
-    })
-</script>
-
-
-
-
+        })
+    </script>
 </div>

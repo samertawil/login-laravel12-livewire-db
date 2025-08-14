@@ -13,7 +13,7 @@ use Livewire\Attributes\Validate;
  
  
 
-class TechSupportCreate extends Component
+class Create extends Component
 {
     #[Validate(['required'])]
     public string $name;
@@ -36,7 +36,8 @@ class TechSupportCreate extends Component
     //    $this->validate();
        
        $this->validate([
-        'captcha'=>['required','captcha']
+        'captcha'=>['required','captcha'],
+        
        ]);
 
             
