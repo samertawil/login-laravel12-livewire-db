@@ -146,12 +146,12 @@ class Register extends Component
 
         $data = $this->citizen()->first();
 
-        $full_name = ($data->CI_FIRST_ARB . ' ' . $data->CI_FATHER_ARB . ' ' . $data->CI_GRAND_FATHER_ARB . ' ' . $data->CI_FAMILY_ARB);
+        $name = ($data->CI_FIRST_ARB . ' ' . $data->CI_FATHER_ARB . ' ' . $data->CI_GRAND_FATHER_ARB . ' ' . $data->CI_FAMILY_ARB);
 
 
         $user = User::create([
             'user_name' => $this->user_name,
-            'full_name' =>  $full_name,
+            'name' =>  $name,
             'mobile' =>  $this->mobile,
             'password' => Hash::make($this->password),
         ]);

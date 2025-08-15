@@ -73,7 +73,7 @@
                 <div class="row">
                     <x-input name="idc" label value="{{ $this->personalData->idc ?? '' }}" disabled></x-input>
 
-                    <x-input name="full_name" label value="{{ Auth::user()->full_name }}" disabled></x-input>
+                    <x-input name="name" label value="{{ Auth::user()->name }}" disabled></x-input>
 
                     <x-input name="gender" label value="{{ $this->personalData->SEX ?? '' }}" divWidth="2" disabled>
                     </x-input>

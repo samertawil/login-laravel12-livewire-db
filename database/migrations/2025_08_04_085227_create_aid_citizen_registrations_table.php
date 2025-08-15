@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('aid_citizen_registrations', function (Blueprint $table) {
             $table->integer('idc');
             $table->primary('idc');
-            $table->string('full_name');
+            $table->string('name');
             $table->date('birthday');
             $table->string('mobile_primary');
             $table->string('mobile_secondary')->nullable();

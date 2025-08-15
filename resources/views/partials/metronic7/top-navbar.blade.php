@@ -94,7 +94,7 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     <button
-                        class="btn btn-small text-muted"><small class="text-dark">{{ Auth::user()->full_name ?? 'Guest' }}</small></button>
+                        class="btn btn-small text-muted"><small class="text-dark">{{ Auth::user()->name ?? 'Guest' }}</small></button>
 
                     <form action="{{ route('logout') }}" method="post">
                         @csrf

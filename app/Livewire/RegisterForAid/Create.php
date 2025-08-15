@@ -42,7 +42,7 @@ class Create extends Component
 
     public function saveAll()
     {
-
+ 
         $this->validate();
 
 
@@ -54,7 +54,7 @@ class Create extends Component
         try {
             AidCitizenRegistration::create([
                 'idc' => $this->UserIdc,
-                'full_name' => Auth::user()->full_name,
+                'full_name' => Auth::user()->name,
                 'birthday' => $this->personalData['CI_BIRTH_DT'],
                 'marital_status' => $maritalStatusConstant,
                 'gender' => $sexConstant,
@@ -121,7 +121,7 @@ class Create extends Component
                 'alert',
                 type: 'Alert',
                 title: 'خطأ',
-                text: ' لم يتم حفظ البيانات  ',
+                text:  $th->getMessage(),
                 confirmButtonText: 'اغلاق'
             );
         }

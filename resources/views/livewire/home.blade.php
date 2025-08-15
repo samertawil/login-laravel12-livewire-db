@@ -9,13 +9,17 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    ...
+
+                    <div class="text-center my-5">
+                        <p> لخدمة تسجيل وتحديث البيانات اضغط <span><a href="{{ route('aid.create') }}"
+                                    target="_blank">{{ __('customTrans.here') }} </a> </span></p>
+                    </div>
                 </div>
             </div>
             <!--end::Card-->
         </div>
-       
+
     </div>
 
- 
+
 </div>

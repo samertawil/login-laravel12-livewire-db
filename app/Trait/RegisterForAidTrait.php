@@ -39,42 +39,34 @@ trait RegisterForAidTrait
     public int|null $wife_breastfeeding = null;
     #[Validate('required')]
     public int|null $mental_disability = null;
-    #[Validate(['required_if:mental_disability,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_mental_disability = 0;
     #[Validate('required')]
     public int|null $physical_impairment = null;
-    #[Validate(['required_if:physical_impairment,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_physical_impairment = 0;
     #[Validate('required')]
     public int|null $hearing_impairment = null;
-    #[Validate(['required_if:hearing_impairment,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_hearing_impairment = 0;
     #[Validate('required')]
     public int|null $visual_impairment = null;
-    #[Validate(['required_if:visual_impairment,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_visual_impairment = 0;
     #[Validate('required')]
     public int|null $diabetes = null;
-    #[Validate(['required_if:diabetes,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_diabetes = 0;
     #[Validate('required')]
     public int|null $blood_pressure = null;
-    #[Validate(['required_if:blood_pressure,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_blood_pressure = 0;
     #[Validate('required')]
     public int|null $cancer = null;
-    #[Validate(['required_if:cancer,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_cancer = 0;
     #[Validate('required')]
     public int|null $Kidney_failure = null;
-    #[Validate(['required_if:Kidney_failure,3', 'integer', 'min:0', 'max:9'])]
     public int|null $count_Kidney_failure = 0;
 
     public   $personalData = '';
 
     public   $familyCount = '';
 
-     public int $UserIdc=0;
+    public int $UserIdc = 0;
 
     public function rules(): array
     {
@@ -89,9 +81,61 @@ trait RegisterForAidTrait
             'blood_pressure' => [Rule::enum(YesNoType::class)],
             'cancer' => [Rule::enum(YesNoType::class)],
             'Kidney_failure' => [Rule::enum(YesNoType::class)],
+            'count_visual_impairment' => ['required_if:visual_impairment,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->visual_impairment === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            'count_mental_disability' => ['required_if:mental_disability,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->mental_disability === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            'count_physical_impairment' => ['required_if:physical_impairment,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->physical_impairment === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            'count_hearing_impairment' => ['required_if:hearing_impairment,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->hearing_impairment === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+            'count_diabetes' => ['required_if:diabetes,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->diabetes === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            'count_blood_pressure' => ['required_if:blood_pressure,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->blood_pressure === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            'count_cancer' => ['required_if:cancer,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->cancer === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            
+            'count_Kidney_failure' => ['required_if:Kidney_failure,3', 'integer', 'min:0', 'max:9', function ($attribute, $value, $fail) {
+                if ($this->Kidney_failure === 3 && $value < 1) {
+                    $fail( 'يجب ان تكون القيمة اكبر من صفر');
+                }
+            }],
+
+            
+
 
         ];
     }
+
+
 
     protected function messages(): array
     {
@@ -116,7 +160,4 @@ trait RegisterForAidTrait
             'count_Kidney_failure.required_if' => ' مطلوب ادخال العدد.',
         ];
     }
-
- 
-    
 }
