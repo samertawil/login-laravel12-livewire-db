@@ -1,4 +1,9 @@
 <div>
+    <x-slot:crumb>
+        <x-breadcrumb></x-breadcrumb>
+    </x-slot:crumb>
+
+    
     <header>
         <div class="container m-auto" style="border-bottom: 1px solid #c3c3c3;">
 

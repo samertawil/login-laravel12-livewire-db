@@ -1,0 +1,224 @@
+<?php
+
+namespace App\Trait;
+
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
+
+
+trait UploadingFilesTrait
+{
+
+
+    use WithFileUploads;
+
+
+
+    public static function uploadSingleFile(mixed $uploadedFile, string $folderName, string $disk): mixed
+    {
+
+
+        $ex = $uploadedFile->getClientOriginalExtension();
+        $filename = $folderName . time() . '_' . rand(00000, 99999) . '.' . $ex;
+        $path = $uploadedFile->storeAs($folderName, $filename, $disk);
+        $attchments = $path;
+
+        return   $attchments;
+    }
+
+
+
+    public static function uploadSingleFileResize(mixed $uploadedFile, string $folderName, string $disk, int $hight, int $width): object|string
+    {
+
+        $extension = strtolower($uploadedFile->getClientOriginalExtension()); // الحصول على الامتداد الأصلي (مثل jpg، png..)
+
+
+        $fileSize = $uploadedFile->getSize() / 1024;  //KB
+        $tempPath = $uploadedFile->getRealPath();
+        $mimeType = $uploadedFile->getMimeType();
+        $info = getimagesize($tempPath);
+        $fileWidth = $info[0] ?? '';
+        $fileHeight = $info[1] ?? '';
+        $fileType = $info['mime'] ?? '';
+
+
+
+
+        if (str_starts_with($mimeType, 'image/')) {
+            $type = 'صورة';
+        } elseif (str_starts_with($mimeType, 'video/')) {
+            $type = 'فيديو';
+        } elseif (str_starts_with($mimeType, 'application/pdf')) {
+            $type = 'PDF';
+        } else {
+            $type = 'ملف آخر';
+        }
+
+
+        $fileName = time() . '_' . rand(10000, 99999) . '.' . $extension; // توليد اسم عشوائي للملف مع الاحتفاظ بالامتداد الأصلي
+
+
+        $fullPath = Storage::disk($disk)->path($folderName . '/' . $fileName); // المسار الكامل على التخزين (storage path)
+
+
+        Storage::disk($disk)->makeDirectory($folderName); // إنشاء المجلد إذا لم يكن موجودًا
+
+
+        // قراءة الصورة وتعديل أبعادها
+        if ($hight && $width) {
+            $image = Image::read($uploadedFile)->resize($hight, $width);
+        } else {
+            $image = Image::read($uploadedFile);
+        }
+
+
+        $encoded = $image->encodeByMediaType(quality: 80);  // Encode using media type with quality 80
+
+
+
+        $encoded->save($fullPath);    // حفظ الصورة مباشرة بنفس الصيغة الأصلية
+
+
+        return $folderName . '/' . $fileName;
+    }
+
+
+
+    public static function uploadAndCompress(mixed $uploadedFile, string $folderName, string $disk, int $requiredSizeInMega): object|string
+    {
+
+        $image = Image::read($uploadedFile);   // قراءة الصورة
+
+        $extension = strtolower($uploadedFile->getClientOriginalExtension()); // توليد اسم للملف مع الامتداد الأصلي
+        $fileName = time() . '_' . rand(10000, 99999) . '.' . $extension;
+
+        // ضغط وتكرار الحفظ حتى يقل الصافي عن 1MB
+        $sizeLimit = $requiredSizeInMega * 1024 * 1024; // 1 ميجا (بالبايت)
+        $quality = 90; // بدءًا من جودة عالية
+
+
+
+
+        do {
+            switch ($extension) {
+                case 'jpg':
+                case 'jpeg':
+
+                    $imageData = $image->encodeByMediaType('image/jpg', quality: $quality);
+
+                    break;
+                case 'png':
+                    $imageData = $image->encodeByMediaType('image/png'); // PNG لا يدعم تقليل الجودة بنفس طريقة JPG
+
+                    break;
+                case 'webp':
+
+                    $imageData = $image->encodeByMediaType('image/webp', quality: $quality);
+                    break;
+                default:
+                    $imageData = $image;
+            }
+            // @phpstan-ignore-next-line
+            $size = strlen($imageData); // حجم الصورة الناتجة
+
+            if ($size > $sizeLimit && $quality > 30) {
+                $quality -= 10; // قلل الجودة كل مرة
+            } else {
+                break;
+            }
+        } while ($size > $sizeLimit);
+
+        // @phpstan-ignore-next-line
+        Storage::disk($disk)->put($folderName . '/' . $fileName, $imageData); // حفظ الصورة النهائية على Storage
+
+        return $folderName . '/' . $fileName;
+    }
+
+
+
+
+    public static function uploadAndCompressMulti(mixed $uploadedFile, string $folderName, string $disk, int $requiredSizeInMega)
+    {
+
+        $attchments_file = [];
+
+
+        foreach ($uploadedFile as  $file) {
+
+
+            $image = Image::read($file);   // قراءة الصورة
+
+            $extension = strtolower($file->getClientOriginalExtension()); // توليد اسم للملف مع الامتداد الأصلي
+            $fileName = time() . '_' . rand(10000, 99999) . '.' . $extension;
+
+            // ضغط وتكرار الحفظ حتى يقل الصافي عن 1MB
+            $sizeLimit = $requiredSizeInMega * 1024 * 1024; // 1 ميجا (بالبايت)
+            $quality = 90; // بدءًا من جودة عالية
+
+
+
+
+            do {
+                switch ($extension) {
+                    case 'jpg':
+                    case 'jpeg':
+
+                        $imageData = $image->encodeByMediaType('image/jpg', quality: $quality);
+
+                        break;
+                    case 'png':
+                        $imageData = $image->encodeByMediaType('image/png'); // PNG لا يدعم تقليل الجودة بنفس طريقة JPG
+
+                        break;
+                    case 'webp':
+
+                        $imageData = $image->encodeByMediaType('image/webp', quality: $quality);
+                        break;
+                    default:
+                        $imageData = $image;
+                }
+                // @phpstan-ignore-next-line
+                $size = strlen($imageData); // حجم الصورة الناتجة
+
+                if ($size > $sizeLimit && $quality > 30) {
+                    $quality -= 10; // قلل الجودة كل مرة
+                } else {
+                    break;
+                }
+            } while ($size > $sizeLimit);
+
+            // @phpstan-ignore-next-line
+
+            Storage::disk($disk)->put($folderName . '/' . $fileName, $imageData); // حفظ الصورة النهائية على Storage
+            $attchments_file[] = $folderName . '/' . $fileName;
+        }
+
+        return  $attchments_file;
+    }
+
+
+
+
+
+    public  static function  uploadsFiles($uploadedFiles, string $dbColumName, string $disk)
+    {
+
+        $attchments_file = [];
+
+        foreach ($uploadedFiles as $file) {
+
+            if ($file->isValid()) {
+
+                $ex = $file->getClientOriginalExtension();
+                $filename = $disk . time() . '_' . rand(00000, 99999) . '.' . $ex;
+                $path = $file->storeAs('/', $filename, $disk);
+
+                $attchments_file[] = $path;
+            }
+        }
+
+        return  $attchments_file;
+    }
+}

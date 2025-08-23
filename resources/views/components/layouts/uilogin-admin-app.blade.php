@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="{{ asset('website-assets/media/logo2.ico') }}" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" /> <!--end::Fonts-->
-   
+
     @if (app()->getLocale() == 'ar')
         <link href="{{ asset('template-assets/metronic7/css/pages/login/classic/login-4.rtl.min.css') }}" rel="stylesheet"
             type="text/css" />
@@ -58,28 +58,32 @@
 
             src: url({{ asset('font/en/NotoSans-Regular.ttf') }});
         }
- 
+
         body {
-           
-            margin: 0 ;
+
+            margin: 0;
             font-family: 'Droid', 'NotoKufiArabic', 'NotoSans', 'Courier New', Courier, monospace !important;
 
         }
 
         .toast-top-full-width {
-        text-align: center;
-    }
+            text-align: center;
+        }
 
-    .disabledTagA {
-    pointer-events: none;
-    cursor: default;
-    text-decoration: none;
-    color: black;
-}
+        .disabledTagA {
+            pointer-events: none;
+            cursor: default;
+            text-decoration: none;
+            color: black;
+        }
 
- 
+
+        .filepond--credits {
+            display: none !important;
+
+        }
     </style>
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @livewireScripts
@@ -125,21 +129,21 @@
 
     {{ $slot ?? '' }}
 
- 
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="{{ asset('template-assets/metronic7/plugins/global/plugins.bundle.js') }}"></script>
     <script src="{{ asset('template-assets/metronic7/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
     <script src="{{ asset('template-assets/metronic7/js/scripts.bundle.js') }}"></script>
     <script>
         window.addEventListener('reload', event => {
-          location.reload();
+            location.reload();
         })
     </script>
-    
+
     <script>
         window.addEventListener('alert', (event) => {
             let data = event.detail;
-    
+
             Swal.fire({
                 title: data.title,
                 text: data.text,
@@ -151,66 +155,66 @@
 
     <script>
         var KTAppSettings = {
-"breakpoints": {
-    "sm": 576,
-    "md": 768,
-    "lg": 992,
-    "xl": 1200,
-    "xxl": 1200
-},
-"colors": {
-    "theme": {
-        "base": {
-            "white": "#ffffff",
-            "primary": "#6993FF",
-            "secondary": "#E5EAEE",
-            "success": "#1BC5BD",
-            "info": "#8950FC",
-            "warning": "#FFA800",
-            "danger": "#F64E60",
-            "light": "#F3F6F9",
-            "dark": "#212121"
-        },
-        "light": {
-            "white": "#ffffff",
-            "primary": "#E1E9FF",
-            "secondary": "#ECF0F3",
-            "success": "#C9F7F5",
-            "info": "#EEE5FF",
-            "warning": "#FFF4DE",
-            "danger": "#FFE2E5",
-            "light": "#F3F6F9",
-            "dark": "#D6D6E0"
-        },
-        "inverse": {
-            "white": "#ffffff",
-            "primary": "#ffffff",
-            "secondary": "#212121",
-            "success": "#ffffff",
-            "info": "#ffffff",
-            "warning": "#ffffff",
-            "danger": "#ffffff",
-            "light": "#464E5F",
-            "dark": "#ffffff"
-        }
-    },
-    "gray": {
-        "gray-100": "#F3F6F9",
-        "gray-200": "#ECF0F3",
-        "gray-300": "#E5EAEE",
-        "gray-400": "#D6D6E0",
-        "gray-500": "#B5B5C3",
-        "gray-600": "#80808F",
-        "gray-700": "#464E5F",
-        "gray-800": "#1B283F",
-        "gray-900": "#212121"
-    }
-},
-"font-family": "Poppins"
-};
+            "breakpoints": {
+                "sm": 576,
+                "md": 768,
+                "lg": 992,
+                "xl": 1200,
+                "xxl": 1200
+            },
+            "colors": {
+                "theme": {
+                    "base": {
+                        "white": "#ffffff",
+                        "primary": "#6993FF",
+                        "secondary": "#E5EAEE",
+                        "success": "#1BC5BD",
+                        "info": "#8950FC",
+                        "warning": "#FFA800",
+                        "danger": "#F64E60",
+                        "light": "#F3F6F9",
+                        "dark": "#212121"
+                    },
+                    "light": {
+                        "white": "#ffffff",
+                        "primary": "#E1E9FF",
+                        "secondary": "#ECF0F3",
+                        "success": "#C9F7F5",
+                        "info": "#EEE5FF",
+                        "warning": "#FFF4DE",
+                        "danger": "#FFE2E5",
+                        "light": "#F3F6F9",
+                        "dark": "#D6D6E0"
+                    },
+                    "inverse": {
+                        "white": "#ffffff",
+                        "primary": "#ffffff",
+                        "secondary": "#212121",
+                        "success": "#ffffff",
+                        "info": "#ffffff",
+                        "warning": "#ffffff",
+                        "danger": "#ffffff",
+                        "light": "#464E5F",
+                        "dark": "#ffffff"
+                    }
+                },
+                "gray": {
+                    "gray-100": "#F3F6F9",
+                    "gray-200": "#ECF0F3",
+                    "gray-300": "#E5EAEE",
+                    "gray-400": "#D6D6E0",
+                    "gray-500": "#B5B5C3",
+                    "gray-600": "#80808F",
+                    "gray-700": "#464E5F",
+                    "gray-800": "#1B283F",
+                    "gray-900": "#212121"
+                }
+            },
+            "font-family": "Poppins"
+        };
     </script>
     @livewireScriptConfig
- 
+    @filepondScripts
     @stack('js')
 </body>
 

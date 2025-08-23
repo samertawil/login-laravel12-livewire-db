@@ -24,16 +24,18 @@
     @stack('css')
     <style>
         body {
-            background-color: rgb(255, 255, 255) ;
+            background-color: rgb(255, 248, 237) ;
         }
     </style>
 </head>
  
 <body>
-
+    @include('partials.metronic7.top-navbar')
+    
     @yield('body')
-
+  
     @include('partials.metronic7.footer-script')
+
     @stack('js')
 </body>
 
