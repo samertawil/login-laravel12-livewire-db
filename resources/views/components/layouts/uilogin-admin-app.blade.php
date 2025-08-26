@@ -84,9 +84,9 @@
         }
     </style>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
     @livewireStyles
-    @livewireScripts
+   
     <title>{{ $title ?? 'Page Title' }}</title>
 </head>
 <style>
@@ -213,7 +213,8 @@
             "font-family": "Poppins"
         };
     </script>
-    @livewireScriptConfig
+    {{-- @livewireScriptConfig --}}
+    @livewireScripts
     @filepondScripts
     @stack('js')
 </body>

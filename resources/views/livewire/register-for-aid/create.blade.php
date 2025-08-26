@@ -3,7 +3,7 @@
         <x-breadcrumb></x-breadcrumb>
     </x-slot:crumb>
 
-    
+
     <header>
         <div class="container m-auto" style="border-bottom: 1px solid #c3c3c3;">
 
@@ -12,7 +12,7 @@
                 <div class="row align-items-center">
                     <div class="col-auto">
                         <a href="/login">
-                            <img src="https://mosa.e-gaza.com/images/p.png" width="55" class="m-2">
+                            <img src="{{ asset('image/login-image.png') }}" width="55" class="m-2">
                         </a>
                     </div>
 
@@ -121,11 +121,12 @@
                 class="form-control btn  my-5 w-75 btn-success ">{{ __('customTrans.save') }}</button>
         </div>
 
-        <div >
+        <div>
             @include('layouts._show_errors_all')
         </div>
-       
+
 
 
 
     </div>
+</div>

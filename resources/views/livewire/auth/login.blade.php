@@ -26,7 +26,7 @@
                                 
                             @enderror"
                                 type="text" placeholder="{{ __('customTrans.user_name') }}"
-                                wire:model="user_name" id="user_name" name="user_name" dir="ltr"
+                                wire:model="user_name" id="user_name" name="user_name" dir="ltr" autocomplete="username"
                                 autofocus />
                             @include('layouts._show-error', ['field_name' => 'user_name'])
                         </div>
@@ -35,7 +35,7 @@
                                 class="form-control h-auto form-control-solid py-4 m-auto  w-75 w-lg-100 text-center @error('password') is-invalid
                                 
                                 @enderror"
-                                type="password" placeholder="{{ __('customTrans.password') }}"
+                                type="password" placeholder="{{ __('customTrans.password') }}" autocomplete="current-password"
                                 name="password" />
                             @include('layouts._show-error', ['field_name' => 'password'])
                         </div>
@@ -50,11 +50,17 @@
                             <a href="{{ route('password.forget') }}" wire:navigate
                                 class="text-muted text-hover-primary">{{ __('customTrans.Forgot Your Password') }}</a>
                         </div>
-                      
+                      <div wire:loading.remove>
                         <button
-                            class="btn btn-primary font-weight-bold  my-5  w-75">{{ __('customTrans.Login') }}</button>
+                        class="btn btn-primary font-weight-bold  my-5  w-75">{{ __('customTrans.Login') }}</button>
+                      </div>
+                       
 
+                            <div wire:loading>
 
+                                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                <span class="sr-only">Loading...</span>
+                            </div>
                     </form>
                     <div class="mt-3">
                         <span class="opacity-70 mr-4">

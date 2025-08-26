@@ -331,7 +331,8 @@ return [
      'Kidney_failure' => 'فشل كلوي',
      'wife_breastfeeding'=>'الزوجة مرضعة',
      'wife_pregnant'=>'الزوجة حامل',
-     'count_visual_impairment'=>'اعاقة بصرية'
+     'count_visual_impairment'=>'اعاقة بصرية',
+     'uploaded_files'=>'المرفقات',
                 
 
         ],

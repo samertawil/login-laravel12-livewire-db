@@ -1,4 +1,4 @@
-<div class="d-flex flex-column flex-root ">
+<div class="d-flex flex-column flex-root " wire:cloak>
 
 
     <div class="login login-signin-on d-flex flex-row-fluid " id="kt_login">
@@ -66,30 +66,31 @@
 
 
                     <div class="col-12 mt-5" style="margin-bottom: 3em !important;">
-                        <label for="uploaded_files">uploaded_files</label>
+                        <label for="uploaded_files">{{ __('customTrans.uploaded_files') }}</label>
                         <x-filepond::upload wire:model="uploaded_files" id="uploaded_files" name="uploaded_files"
                             multiple max-files="5" allowFileSizeValidation maxFileSize='5120KB' required='false'
                             class="@error('uploaded_files') is-invalid   @enderror" />
                         @include('layouts._show-error', ['field_name' => 'uploaded_files'])
-                        <small>يجب ارفاق صور فقط , حجم الصورة الواحدة لا يتجاوز 5 ميجا , اقصى عدد للصور هو 5 صور</small>
+                        <small class="text-muted">يجب ارفاق صور فقط , حجم الصورة الواحدة لا يتجاوز 5 ميجا , اقصى عدد للصور هو 5 صور</small>
                     </div>
 
 
 
                     <div class="row col-12 justify-content-center">
-                        <div class="g-recaptcha" data-sitekey="{!! env('RECAPTCHA_SITE_KEY', 'NO-KEY-FOUND') !!}"></div>
+                        @guest
+                            <div class="g-recaptcha" data-sitekey="{!! env('RECAPTCHA_SITE_KEY', 'NO-KEY-FOUND') !!}"></div>
 
-                        <div class="container my-1">
-                            <img src="{{ captcha_src('technicalSupport') }}" alt="captcha">
+                            <div class="container my-1">
+                                <img src="{{ captcha_src('technicalSupport') }}" alt="captcha">
 
-                            <input type="text" wire:model='captcha' name="captcha"
-                                class="form-control px-8 my-3 @error('captcha') is-invalid @enderror"
-                                placeholder="{{ __('customTrans.captcha') }}">
-                            @error('captcha')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
+                                <input type="text" wire:model='captcha' name="captcha"
+                                    class="form-control px-8 my-3 @error('captcha') is-invalid @enderror"
+                                    placeholder="{{ __('customTrans.captcha') }}">
+                                @error('captcha')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endguest
 
 
                         <div class="w-100 m-auto ">
@@ -97,8 +98,8 @@
                                 class="btn btn-primary font-weight-bold  my-5 w-100">{{ __('customTrans.send') }}</button>
 
                             <div class="form-group d-flex flex-wrap flex-center mt-10">
-                                <x-cancel-back class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2"
-                                    :route="route('login')" label="cancel_back" wire:loading.remove></x-cancel-back>
+                                <x-cancel-back class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2" label="back"
+                                    :route="route('login')"   wire:loading.remove></x-cancel-back>
 
                             </div>
 
@@ -113,15 +114,19 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div>0
     @push('js')
         <script>
             $('#subject_id').on('change', function() {
 
                 $data = $("#subject_id option:selected").text();
+             
 
             })
         </script>
+          
+
+     
     @endpush
 
 </div>

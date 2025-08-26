@@ -1,8 +1,44 @@
-<div class="container ">
+<div class="container "  wire:cloak>
 
     <x-slot:crumb>
         <x-breadcrumb button label="{{ __('customTrans.add new') }}" route="{{ route('support.create') }}"></x-breadcrumb>
     </x-slot:crumb>
+
+
+    
+    <!-- Notification Icon -->
+    <div wire:poll.10s="refreshNotifications">
+        <div>
+            <button class="btn btn-primary" data-toggle="collapse" data-target="#demo">
+                {{__('customTrans.Notifications')}} <span class="badge bg-danger">{{ $notifications->count() }}</span>
+            </button>
+
+            <!-- notification content here -->
+
+            <div id="demo" class="collapse">
+                <ul class="list-group mt-2 ">
+
+                    @forelse ($notifications as $notification)
+                        <li class="list-group-item d-flex  justify-content-between align-items-center">
+
+                            <a href="{{ $notification->data['url'] ?? '#' }}"
+                                wire:click.prevent="markAsRead('{{ $notification->id }}')">
+                                {{ $notification->data['content'] ?? 'No content' }}
+                            </a>
+                            <button wire:click="markAsRead('{{ $notification->id }}')"
+                                class="btn btn-sm btn-outline-secondary">Mark read</button>
+                        </li>
+
+                    @empty
+                        <li class="list-group-item">No new notifications</li>
+                    @endforelse
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+
 
     @forelse ($this->allData as $data)
         <div class="card card-custom my-6" data-card="true" id="kt_card_4">

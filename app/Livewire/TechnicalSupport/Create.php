@@ -5,7 +5,6 @@ namespace App\Livewire\TechnicalSupport;
 
 use Livewire\Component;
 use Illuminate\View\View;
-use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
 use App\Models\TechnicalSupport;
 use Livewire\Attributes\Computed;
@@ -55,7 +54,7 @@ class Create extends Component
         $files = null;
 
         if ( ! empty($this->uploaded_files)) {
-            $files = UploadingFilesTrait::uploadAndCompressMulti($this->uploaded_files, 'test', 'public', 1);
+            $files = UploadingFilesTrait::uploadAndCompressMulti($this->uploaded_files, 'technicalsupport', 'public', 1);
 
         }
 

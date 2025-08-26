@@ -416,5 +416,8 @@ return [
 'technical support'=>'طلب دعم فني',
 'answer_q1'=>'اجابة السؤال الاول',
 'answer_q2'=>'اجابة السؤال الثاني',
+'uploaded_files'=>'المرفقات',
+'back'=>'رجوع',
+'Notifications'=>'الاشعارات',
 
 ];

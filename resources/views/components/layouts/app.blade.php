@@ -17,7 +17,7 @@
     @include('partials.metronic7.head')
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 
     @livewireStyles
 
@@ -38,7 +38,7 @@
 </head>
 
 <body>
-    @include('partials.metronic7.top-navbar')
+    {{-- @include('partials.metronic7.top-navbar') --}}
 
 
 
