@@ -1,5 +1,5 @@
 <div class="d-flex flex-column flex-root">
- 
+
     <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
         <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat "
             style="background-image: url('{{ asset('template-assets/metronic7/media/bg/bg-3.jpg') }}');">
@@ -7,7 +7,7 @@
             <div class=" login-form text-center p-7 position-relative overflow-hidden">
 
                 <div class="d-flex flex-center mb-10">
-                    <a  >
+                    <a>
 
                         <img src="{{ asset('Users_icon.png') }}" class="max-h-150px" alt="" />
                     </a>
@@ -25,21 +25,25 @@
                                 class="form-control h-auto form-control-solid py-4 m-auto  w-75 w-lg-100 text-center @error('user_name') is-invalid
                                 
                             @enderror"
-                                type="text" placeholder="{{ __('customTrans.user_name') }}"
-                                wire:model="user_name" id="user_name" name="user_name" dir="ltr" autocomplete="username"
-                                autofocus />
+                                type="text" placeholder="{{ __('customTrans.user_name') }}" wire:model="user_name"
+                                id="user_name" name="user_name" dir="ltr" autocomplete="username" autofocus />
                             @include('layouts._show-error', ['field_name' => 'user_name'])
                         </div>
-                        <div class="form-group mb-5">
-                            <input wire:model="password" name="password" dir="ltr"
-                                class="form-control h-auto form-control-solid py-4 m-auto  w-75 w-lg-100 text-center @error('password') is-invalid
-                                
-                                @enderror"
-                                type="password" placeholder="{{ __('customTrans.password') }}" autocomplete="current-password"
-                                name="password" />
+                        
+
+                        <div class="form-group mb-5" style="position: relative; max-width: 600px; margin: auto;">
+                            <input wire:model.live="password" name="password" dir="ltr" id="password"
+                                class="form-control h-auto form-control-solid py-4 w-75 w-lg-100 text-center @error('password') is-invalid @enderror"
+                                type="password" placeholder="{{ __('customTrans.password') }}"
+                                autocomplete="new-password" />
+
+                            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"
+                                style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); cursor: pointer;"></span>
                             @include('layouts._show-error', ['field_name' => 'password'])
                         </div>
-                        <div class="form-group d-flex flex-wrap justify-content-between align-items-center m-auto w-75 w-lg-100">
+
+                        <div
+                            class="form-group d-flex flex-wrap justify-content-between align-items-center m-auto w-75 w-lg-100">
                             <div class="checkbox-inline">
                                 <label class="checkbox m-0 text-muted">
                                     <input wire:model='remember' name="remember" type="checkbox" />
@@ -47,44 +51,44 @@
                                     {{ __('customTrans.remember') }}
                                 </label>
                             </div>
-                            <a href="{{ route('password.forget') }}" wire:navigate
+                            <a href="{{ route('password.forget') }}"
                                 class="text-muted text-hover-primary">{{ __('customTrans.Forgot Your Password') }}</a>
                         </div>
-                      <div wire:loading.remove>
-                        <button
-                        class="btn btn-primary font-weight-bold  my-5  w-75">{{ __('customTrans.Login') }}</button>
-                      </div>
-                       
+                        <div wire:loading.remove wire:target='authenticate'>
+                            <button @disabled($password == '')
+                                class="btn btn-primary font-weight-bold  my-5  w-75">{{ __('customTrans.Login') }}</button>
+                        </div>
 
-                            <div wire:loading>
 
-                                <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-                                <span class="sr-only">Loading...</span>
-                            </div>
+                        <div wire:loading wire:target='authenticate'>
+
+                            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </form>
                     <div class="mt-3">
                         <span class="opacity-70 mr-4">
                             {{ __('customTrans.dont have account') }}
                         </span>
-                        <a href="{{ route('register') }}" wire:navigate id="kt_login_signup"
+                        <a href="{{ route('register') }}" id="kt_login_signup"
                             class="text-muted text-hover-primary font-weight-bold">{{ __('customTrans.register_new_account') }}</a>
                     </div>
                     <div class="mt-5">
-                        <a href="{{ route('support.create') }}" wire:navigate
-                        class="text-muted text-hover-primary">{{ __('customTrans.technical support') }}</a>  
+                        <a href="{{ route('support.create') }}"
+                            class="text-muted text-hover-primary">{{ __('customTrans.technical support') }}</a>
                     </div>
-                 
+
                 </div>
                 <div class="mt-20 col-12">
                     @include('partials.metronic7._lang')
                 </div>
-              
+
             </div>
-          
+
         </div>
-      
+
     </div>
-  
+
 </div>
 
 
@@ -149,4 +153,24 @@
     };
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Select all toggle-password icons
+        const togglePasswordIcons = document.querySelectorAll('.toggle-password');
 
+        togglePasswordIcons.forEach(function (toggleIcon) {
+            // Get the related input using the toggle attribute
+            const inputSelector = toggleIcon.getAttribute('toggle');
+            const passwordInput = document.querySelector(inputSelector);
+
+            toggleIcon.addEventListener('click', function () {
+                // Toggle input type
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Toggle eye / eye-slash icon
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    });
+</script>

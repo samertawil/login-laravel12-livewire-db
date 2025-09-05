@@ -41,10 +41,10 @@
 
         <div class="row">
 
-
+ 
 
             <x-select wire:model.live='e_home_type' name="e_home_type"
-                :options="$statuses->where('p_id_sub', config('myconstant.e_home_type'))->pluck('status_name', 'id')"
+                :options="$statuses->pluck('status_name', 'id')"
                 label req></x-select>
 
             <div style="{{$e_home_type ==41 ? 'display:none':''}}" class="col-lg-3 px-0">

@@ -9,9 +9,12 @@ use Livewire\Attributes\Layout;
 use App\Models\TechnicalSupport;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
+use App\Services\StatusRepository;
 use App\Trait\UploadingFilesTrait;
+use Illuminate\Support\Facades\Auth;
 use Spatie\LivewireFilepond\WithFilePond;
-use App\Services\CacheStatusModelServices;
+use App\Services\TechnicalSupportRepository;
+
 
 class Create extends Component
 {
@@ -29,19 +32,15 @@ class Create extends Component
     #[Validate(['required'])]
     public string $issue_description;
     #[Validate(['uploaded_files.*' => 'nullable|mimetypes:image/jpg,image/jpeg,image/png|max:5120'])]
-    public  $uploaded_files =[];
+    public  $uploaded_files = [];
 
     public string $captcha;
 
     use WithFilePond;
 
-
     public function rules(): array
     {
-        return [
-
-            'captcha' => ['required', 'captcha'],
-        ];
+        return !Auth::check() ? ['captcha' => ['required', 'captcha']] : [];
     }
 
 
@@ -53,12 +52,11 @@ class Create extends Component
 
         $files = null;
 
-        if ( ! empty($this->uploaded_files)) {
+        if (! empty($this->uploaded_files)) {
             $files = UploadingFilesTrait::uploadAndCompressMulti($this->uploaded_files, 'technicalsupport', 'public', 1);
-
         }
 
-        $data = TechnicalSupport::create([
+        $data = [
             'name' => $this->name,
             'user_name' => $this->user_name,
             'mobile' => $this->mobile,
@@ -67,7 +65,12 @@ class Create extends Component
             'issue_description' => $this->issue_description,
             'terminal_id' => 66,
             'uploaded_files' => $files,
-        ]);
+        ];
+
+        $technicalSupportREpo = new TechnicalSupportRepository();
+
+        $technicalSupportREpo->saveData($data);
+
 
         $this->dispatch('reload');
 
@@ -83,7 +86,7 @@ class Create extends Component
     #[Computed()]
     public function statuses()
     {
-        $statusData = new CacheStatusModelServices();
+        $statusData = new StatusRepository();
         $supportForLogin = $statusData->statusesPSubId(config('myconstants.supportForLogin'));
         $regions =  $statusData->statusesPSubId(config('myconstants.regions'));
         $supportForhelp =  $statusData->statusesPSubId(config('myconstants.supportForhelp'));

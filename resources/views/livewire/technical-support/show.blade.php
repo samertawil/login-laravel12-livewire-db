@@ -82,7 +82,7 @@
                     {{ $data->statusIdName->status_name ?? '-' }}</br>
                 @endif
 
-                {{ $data->issue_description }}
+                {{ $data->replay }}
 
                 <div class="col-12 my-9">
                     @if ($data->uploaded_files)

@@ -6,7 +6,7 @@ use App\Models\Status;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
 
-class CacheStatusModelServices
+class StatusRepository
 {
 
     public static function getData(): mixed
@@ -20,7 +20,7 @@ class CacheStatusModelServices
 
     public function statusesPSubId(int|null $p_id_sub = null): Collection
     {
-        
+      
         return cache()->remember(
             'statusData' . ($p_id_sub !== null ? "_{$p_id_sub}" : ''),3600,
             fn() =>
@@ -31,4 +31,23 @@ class CacheStatusModelServices
                 ->get()
         );
     }
+
+
+    // public  function statuses(): Collection
+    // {
+    //     return cache()->remember(
+    //         'statuses_filtered',
+    //         3600,
+    //         fn() =>
+    //         Status::select('status_name', 'id', 'p_id_sub')
+    //             ->whereIn('p_id_sub', [
+    //                 config('myconstant.marital_status'),
+    //                 config('myconstant.regions'),
+    //                 config('myconstant.gender'),
+    //                 config('myconstant.e_home_type'),
+    //             ])->get()
+    //     );
+    // }
+
+    
 }
