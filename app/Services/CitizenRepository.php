@@ -6,7 +6,8 @@ namespace App\Services;
 use App\Models\Citizen;
 
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+
 
 
 class CitizenRepository
@@ -20,7 +21,7 @@ class CitizenRepository
    
 
 
-    public function getCachedCitizenId(int $citizen_id)
+    public function getCachedCitizenId(int $citizen_id): Model
     {
 
         $data = Cache::remember("citizenData.$citizen_id", now()->addHours(24), function () use ($citizen_id) {

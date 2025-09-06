@@ -21,40 +21,57 @@ class Create extends Component
 
 
 
-
     public function mount(): void
     {
 
         $this->UserIdc = Auth::user()->user_name;
 
+        self::getProtectedPersonalData();
+      
+        self::getProtectedFamilyCount();
+        
+    
+    }
+
+    public function getProtectedPersonalData() {
+        
         $getCitizenRepo = new CitizenRepository();
         $this->personalData = $getCitizenRepo->getCachedCitizenId($this->UserIdc);
 
-
-        $getRelationRepo = new RelationRepository();
-        $this->familyCount =  $getRelationRepo->getCachedRelationForId($this->UserIdc);
+        return  $this->personalData;
     }
 
 
+    public function getProtectedFamilyCount() {
+        
+       
+        $getRelationRepo = new RelationRepository();
+        $this->familyCount =  $getRelationRepo->getCachedRelationForId($this->UserIdc);
+        
+        return  $this->familyCount;
+    }
 
     public function saveAll()
     {
-
+       
         $this->validate();
+ 
+        if( ! (self::getProtectedPersonalData()) && !( self::getProtectedPersonalData()['SEX']) && !( self::getProtectedPersonalData()['SOCIAL_STATUS'])) {
+          return ;
+        }
+       
 
-        (int) $sexConstant = Status::where('status_name', $this->personalData['SEX'])->value('id');
-        (int) $maritalStatusConstant = Status::where('status_name', $this->personalData['SOCIAL_STATUS'])->value('id');
-
-
-
+        (int) $sexConstant = Status::where('status_name', self::getProtectedPersonalData()['SEX'])->value('id');
+        (int) $maritalStatusConstant = Status::where('status_name', self::getProtectedPersonalData()['SOCIAL_STATUS'])->value('id');
+       
         $mainRegistrationData = [
 
             'idc' => $this->UserIdc,
             'full_name' => Auth::user()->name,
-            'birthday' => $this->personalData['CI_BIRTH_DT'],
+            'birthday' => self::getProtectedPersonalData()['CI_BIRTH_DT'],
             'marital_status' => $maritalStatusConstant,
             'gender' => $sexConstant,
-            'family_count' => $this->familyCount,
+            'family_count' => self::getProtectedFamilyCount(),
             'mobile_primary' => $this->mobile_primary,
             'mobile_secondary' => $this->mobile_secondary,
 
@@ -107,7 +124,7 @@ class Create extends Component
             text: $result['message'],
             confirmButtonText: 'اغلاق'
         );
-
+   
         return to_route($result['route']);
     }
 

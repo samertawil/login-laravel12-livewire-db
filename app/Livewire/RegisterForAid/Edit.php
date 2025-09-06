@@ -2,25 +2,18 @@
 
 namespace App\Livewire\RegisterForAid;
 
-use Log;
+
 use App\Models\Status;
-use App\Models\Citizen;
-use App\Models\Setting;
 use Livewire\Component;
-use App\Models\Relation;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
-use App\Models\AidCitizenHealth;
-use App\Models\AidCitizenAddress;
 use App\Services\StatusRepository;
 use App\Trait\RegisterForAidTrait;
-use Illuminate\Support\Facades\DB;
 use App\Services\CitizenRepository;
-use App\Services\SettingRepository;
 use App\Services\CacheModelServices;
 use App\Services\RelationRepository;
 use Illuminate\Support\Facades\Auth;
-use App\Models\AidCitizenRegistration;
+use Illuminate\Database\Eloquent\Model;
 use App\Services\RegistrationRepository;
 use App\Services\CitizenHealthRepository;
 use App\Services\CitizenAddressRepository;
@@ -29,45 +22,30 @@ class Edit extends Component
 {
     use RegisterForAidTrait;
 
-    public   $personalData = '';
 
-    public   $familyCount = '';
-
-    public int $UserIdc = 0;
-
-    protected mixed $dataCitizenRegistration = null;
-    public mixed $dataCitizenAddress = null;
-    public mixed $dataCitizenHealth = null;
+    protected Model|null $dataCitizenRegistration = null;
+    protected Model|null $dataCitizenAddress = null;
+    protected Model|null $dataCitizenHealth = null;
 
 
     public function mount(): void
     {
 
-
-
         $this->UserIdc = Auth::user()->user_name;
 
+        $this->personalData =   self::getProtectedPersonalData();;
+      
+        $this->familyCount =  self::getProtectedFamilyCount();
 
-
-        $getCitizenRepo = new CitizenRepository();
-        $this->personalData = $getCitizenRepo->getCachedCitizenId($this->UserIdc);
-
-
-        $getRelationRepo = new RelationRepository();
-        $this->familyCount =  $getRelationRepo->getCachedRelationForId($this->UserIdc);
 
         $getRegistrationRepo = new RegistrationRepository();
         $this->dataCitizenRegistration = $getRegistrationRepo->getRegistrationByIdc($this->UserIdc);
 
+        $this->dataCitizenAddress = self::getProtectedDataCitizenAddress();
+      
+        $this->dataCitizenHealth = self::getProtectedDataCitizenHealth();
 
-        $getCitizenAddressRepo = new CitizenAddressRepository();
-        $this->dataCitizenAddress = $getCitizenAddressRepo->getCitizenAddressByIdc($this->UserIdc);
- 
-
-        $getCitizenHealthRepo = new CitizenHealthRepository();
-        $this->dataCitizenHealth = $getCitizenHealthRepo->getCitizenHealthByIdc($this->UserIdc);
-
-
+   
 
         $this->mobile_primary = $this->dataCitizenRegistration->mobile_primary;
         $this->mobile_secondary = $this->dataCitizenRegistration->mobile_secondary;
@@ -101,13 +79,58 @@ class Edit extends Component
         $this->count_Kidney_failure = $this->dataCitizenHealth->count_Kidney_failure;
     }
 
+
+    public function getProtectedPersonalData() {
+        
+        $getCitizenRepo = new CitizenRepository();
+        $this->personalData = $getCitizenRepo->getCachedCitizenId($this->UserIdc);
+
+        return  $this->personalData;
+    }
+
+
+    public function getProtectedFamilyCount() {
+        
+       
+        $getRelationRepo = new RelationRepository();
+        $this->familyCount =  $getRelationRepo->getCachedRelationForId($this->UserIdc);
+        
+        return  $this->familyCount;
+    }
+
+    public function getProtectedDataCitizenAddress() {
+        
+       
+        $getCitizenAddressRepo = new CitizenAddressRepository();
+        $this->dataCitizenAddress = $getCitizenAddressRepo->getCitizenAddressByIdc($this->UserIdc);
+
+      
+        
+        return  $this->dataCitizenAddress;
+    }
+    
+
+    public function getProtectedDataCitizenHealth(): Model {
+        
+        
+        $getCitizenHealthRepo = new CitizenHealthRepository();
+        $this->dataCitizenHealth = $getCitizenHealthRepo->getCitizenHealthByIdc($this->UserIdc);
+      
+        
+        return  $this->dataCitizenHealth;
+    }
+
     public function saveAll()
     {
-
+       
         $this->validate();
 
+        if( ! (self::getProtectedPersonalData()) && !( self::getProtectedPersonalData()['SOCIAL_STATUS'])) {
+            return ;
+          }
+         
 
-        (int) $maritalStatusConstant = Status::where('status_name', $this->personalData['SOCIAL_STATUS'])->value('id');
+        (int) $maritalStatusConstant = Status::where('status_name',  self::getProtectedPersonalData()['SOCIAL_STATUS'])->value('id');
 
         
 
@@ -115,14 +138,14 @@ class Edit extends Component
             'type' => 'edit',
             'idc' => $this->UserIdc,
             'marital_status' => $maritalStatusConstant,
-            'family_count' => $this->familyCount,
+            'family_count' => self::getProtectedFamilyCount(),
             'mobile_primary' => $this->mobile_primary,
             'mobile_secondary' => $this->mobile_secondary,  
         ];
 
         $aidCitizenAddressData = [
 
-            'id' => $this->dataCitizenAddress->id,
+            'id' => self::getProtectedDataCitizenAddress()->id,
             'region_id' => $this->region_id,
             'city_id' => $this->city_id,
             'neighbourhood_id' => $this->neighbourhood_id,
@@ -135,7 +158,7 @@ class Edit extends Component
 
             
         $aidCitizenHealthData = [
-            'id' => $this->dataCitizenHealth->id,
+            'id' => self::getProtectedDataCitizenHealth()->id,
             'wife_pregnant' => $this->wife_pregnant,
             'wife_breastfeeding' => $this->wife_breastfeeding,
             'mental_disability' => $this->mental_disability,

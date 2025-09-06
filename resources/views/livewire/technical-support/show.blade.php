@@ -50,7 +50,7 @@
                     <h3 class="card-label">
                         <small>عنوان الطلب</small>
 
-                        {{ $data->statusSubjectName->status_name }} &nbsp; &nbsp; <span
+                        {{ $data->statusSubjectName->status_name??'' }} &nbsp; &nbsp; <span
                             style="font-size: 12px; ">{{ $data->created_at }}</span>
 
                     </h3>

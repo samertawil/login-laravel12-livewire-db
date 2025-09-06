@@ -66,7 +66,7 @@ class RegistrationRepository
                     'route' => 'home',
                 ];
             } catch (\Throwable $th) {
-
+                
                 return   self::faildSave($th, $mainRegistrationData['idc']);
             }
         }
@@ -86,7 +86,8 @@ class RegistrationRepository
         return [
             'type' => 'Alert',
             'title' => 'خطأ',
-            'message' => $th->getMessage(),
+            'message' => 'خطأ في حفظ البيانات',
+            'route' => 'home',
         ];
     }
 }

@@ -7,6 +7,7 @@ namespace App\Trait;
 use App\Enums\YesNoType;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
+use Illuminate\Database\Eloquent\Model;
 
 trait RegisterForAidTrait
 {
@@ -62,9 +63,9 @@ trait RegisterForAidTrait
     public int|null $Kidney_failure = null;
     public int|null $count_Kidney_failure = 0;
 
-    public   $personalData = '';
+    protected Model|null  $personalData = null;
 
-    public   $familyCount = '';
+    protected int|null $familyCount = null;
 
     public int $UserIdc = 0;
 
